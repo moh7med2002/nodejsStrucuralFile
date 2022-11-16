@@ -7,7 +7,7 @@ router.post('/create',async(req,res,next)=>{
         const {title,LevelId} = req.body;
         const cls = new Class({title,LevelId})
         await cls.save()
-        res.status(200).json('تم إنشاء ')
+        res.status(200).json('تم إنشاء الصف')
     }
     catch(err)
     {
