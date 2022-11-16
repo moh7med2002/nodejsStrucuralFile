@@ -148,7 +148,7 @@ app.use((error,req,res,next)=>{
 
 const seqalize = require('./util/database');
 seqalize
-.sync({force:true})
+.sync()
 .then(result=>{
     console.log('conntect');
     app.listen(process.env.PORT || 8080);
