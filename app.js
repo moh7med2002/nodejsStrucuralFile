@@ -145,6 +145,8 @@ app.use((error,req,res,next)=>{
 });
 
 
+console.log("edit");
+
 const seqalize = require('./util/database');
 seqalize
 .sync()

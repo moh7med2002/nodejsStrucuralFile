@@ -22,7 +22,7 @@ module.exports.registerStudent = async(req,res,next)=>
             gender:gender
         });
         await newStudent.save()
-        res.status(200).json({message:'تم انشاء حساب الطالب'})
+        res.status(200).json({message:'تم انشاء حساب الطالب'});
     }
     catch(err){
         if(! err.statusCode){
