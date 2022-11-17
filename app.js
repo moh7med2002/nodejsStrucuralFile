@@ -169,7 +169,7 @@ seqalize
 .sync({force:true})
 .then(result=>{
     console.log('conntect');
-    app.listen(process.env.PORT || 8080);
+    app.listen(process.env.PORT);
 })
 .catch(err=>{
     console.log(err);
