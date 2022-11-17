@@ -165,14 +165,17 @@ app.use((error,req,res,next)=>{
     res.status(status).json({message:message, data:data});
 });
 
+
+const port = process.env.PORT || 8080;
+console.log(port);
 const seqalize = require('./util/database');
 seqalize
 .sync()
 .then(result=>{
     console.log('conntect');
-    app.listen(process.env.PORT || 8080 ,()=>{
+    app.listen(port ,()=>{
             // Currently you can kill ports running on TCP or UDP protocols
-            kill(process.env.PORT || 8080, 'tcp')
+            kill(port, 'tcp')
             .then(console.log)
             .catch(console.log)
     });
