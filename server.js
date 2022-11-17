@@ -2,8 +2,9 @@ const express=require('express');
 const barserBody=require('body-parser');
 const multer=require('multer');
 const path=require('path');
-const mongoose=require('mongoose')
 const app=express();
+const kill = require('kill-port')
+
 
 
 
@@ -166,10 +167,17 @@ app.use((error,req,res,next)=>{
 
 const seqalize = require('./util/database');
 seqalize
-.sync({force:true})
+.sync()
 .then(result=>{
     console.log('conntect');
-    app.listen(process.env.PORT || 8080);
+    app.listen(process.env.PORT || 8080 ,()=>{
+        setTimeout(() => {
+            // Currently you can kill ports running on TCP or UDP protocols
+            kill(process.env.PORT || 8080, 'tcp')
+            .then(console.log)
+            .catch(console.log)
+          }, 1000)
+    });
 })
 .catch(err=>{
     console.log(err);
