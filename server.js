@@ -171,12 +171,10 @@ seqalize
 .then(result=>{
     console.log('conntect');
     app.listen(process.env.PORT || 8080 ,()=>{
-        setTimeout(() => {
             // Currently you can kill ports running on TCP or UDP protocols
             kill(process.env.PORT || 8080, 'tcp')
             .then(console.log)
             .catch(console.log)
-          }, 1000)
     });
 })
 .catch(err=>{
