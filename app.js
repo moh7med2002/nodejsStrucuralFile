@@ -95,7 +95,7 @@ Unit.belongsTo(Course);
 Unit.hasMany(Exam);
 
 // Lesson
-Lesson.hasOne(Unit);
+Lesson.belongsTo(Unit);
 
 // Exam 
 Exam.belongsTo(Unit);
@@ -122,19 +122,39 @@ Comment.belongsTo(Post)
 
 // Level
 Level.hasMany(Class)
+Level.hasMany(Subject)
 
 //class
 Class.belongsTo(Level)
+Class.hasMany(Subject)
+
+//subject
+Subject.belongsTo(Class)
+Subject.belongsTo(Level)
 
 // refer routes
 const studentRouter = require('./routers/student');
 app.use('/api/student' , studentRouter);
+
+const teacherRouter = require('./routers/teacher');
+app.use('/api/teacher' , teacherRouter);
 
 const levelRouter = require('./routers/level');
 app.use('/api/level' , levelRouter);
 
 const classRouter = require('./routers/class');
 app.use('/api/class' , classRouter);
+
+const subjectsRouter = require('./routers/subject');
+app.use('/api/subject' , subjectsRouter);
+
+const courseRouter = require('./routers/course');
+app.use('/api/course' , courseRouter);
+
+const unitRouter = require('./routers/unit');
+app.use('/api/unit' , unitRouter);
+
+
 
 app.use((error,req,res,next)=>{
     console.log(error);
@@ -144,14 +164,12 @@ app.use((error,req,res,next)=>{
     res.status(status).json({message:message, data:data});
 });
 
-
-
 const seqalize = require('./util/database');
 seqalize
-.sync()
+.sync({force:true})
 .then(result=>{
     console.log('conntect');
-    app.listen(process.env.PORT || 6200);
+    app.listen(process.env.PORT || 8080);
 })
 .catch(err=>{
     console.log(err);
