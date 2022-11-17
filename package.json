@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "kill":"npx kill-port 8080"
+    "kill":"npx kill-port 8080",
+    "stop": "taskkill -f -im node.exe"
   },
   "author": "mohammed hesham",
   "license": "ISC",
