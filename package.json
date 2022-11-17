@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --delay 500ms app.js"
+    "start": "node app.js --delay 500ms"
   },
   "author": "mohammed hesham",
   "license": "ISC",
