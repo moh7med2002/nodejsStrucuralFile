@@ -68,6 +68,7 @@ const Class = require('./models/Class');
 const Subject = require('./models/Subject');
 const Grade = require('./models/Grade');
 const Teacher = require('./models/Teacher');
+const Section = require('./models/Section');
 
 
 //  parent
@@ -77,6 +78,7 @@ Parent.hasMany(Student,{onDelete:"SET NULL"});
 Student.belongsTo(Parent);
 Student.belongsTo(Level);
 Student.belongsTo(Class);
+Student.belongsTo(Section);
 Student.belongsToMany(Course, { through: "Student_Course", onDelete:"CASCADE" });
 Student.belongsToMany(Forum, { through: "Student_Forum", onDelete:"CASCADE"});
 Student.hasMany(Grade , {onDelete:"CASCADE" });
@@ -92,6 +94,7 @@ Course.belongsTo(Subject);
 Course.belongsTo(Level);
 Course.belongsTo(Class);
 Course.hasMany(Unit ,{onDelete:"CASCADE"});
+Course.belongsTo(Section);
 
 // Unit
 Unit.hasMany(Lesson , {onDelete:"CASCADE"});
@@ -180,7 +183,7 @@ const port = process.env.PORT || 9000;
 console.log(port);
 const seqalize = require('./util/database');
 seqalize
-.sync()
+.sync({force:true})
 .then(result=>{
     console.log('conntect');
     app.listen(port);
