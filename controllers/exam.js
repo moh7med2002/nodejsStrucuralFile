@@ -71,3 +71,25 @@ exports.getExam = async(req,res,next)=>
         next(err);
     }
 }
+
+
+module.exports.markExam = async(req,res,next)=>{
+    const {answers} = req.body;
+    let TotalMark = 0;
+    try{
+        for (const answer of answers) {
+            const fetchedAnswer = await Answer.findOne({where:{id:answer.answer}});
+            if(fetchedAnswer.isRight){
+                TotalMark+=1;
+            }
+        }
+        console.log(TotalMark);
+        res.status(200).json('تم تصليح الإختبار')
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}

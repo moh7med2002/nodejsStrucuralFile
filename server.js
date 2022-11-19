@@ -3,6 +3,7 @@ const barserBody=require('body-parser');
 const multer=require('multer');
 const path=require('path');
 const app=express();
+const cors = require('cors');
 
 
 
@@ -45,6 +46,9 @@ app.use((req,res,next)=>{
     }
     next();
 });
+
+
+app.use(cors())
 
 
 const Student = require('./models/Student');
@@ -157,7 +161,7 @@ app.use('/api/unit' , unitRouter);
 
 const lessonRouter = require('./routers/lesson');
 app.use('/api/lesson' , lessonRouter);
-
+ 
 const examRouter = require('./routers/exam');
 app.use('/api/exam' , examRouter);
 
