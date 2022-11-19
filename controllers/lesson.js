@@ -1,8 +1,8 @@
 const Lesson = require('../models/Lesson')
-exports.createUnit = async(req,res,next)=>
+exports.createLesson = async(req,res,next)=>
 {
     try{
-        const {title,UnitId} = req.body
+        const {title,UnitId, videoUrl , content} = req.body
         const lesson = new Lesson(req.body)
         await lesson.save()
         res.status(201).json('تم انشاء الدرس')

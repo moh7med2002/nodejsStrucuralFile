@@ -8,10 +8,14 @@ const Grade = Seqalize.define('Grade' , {
         allowNull:false,
         primaryKey:true
     },
-    grade:{
+    studentGrade:{
         type:DataTypes.INTEGER,
         required: true
     },
+    totalGrade:{
+        type:DataTypes.INTEGER,
+        required: true
+    }
 });
 
 module.exports = Grade;

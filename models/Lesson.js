@@ -16,6 +16,10 @@ const Lesson = Seqalize.define('Lesson' , {
         type:DataTypes.STRING,
         required: true
     },
+    videoUrl:{
+        type:DataTypes.STRING,
+        required: true
+    }
 });
 
 module.exports = Lesson;

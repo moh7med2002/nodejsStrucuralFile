@@ -3,7 +3,6 @@ const barserBody=require('body-parser');
 const multer=require('multer');
 const path=require('path');
 const app=express();
-const kill = require('kill-port')
 
 
 
@@ -156,6 +155,11 @@ const unitRouter = require('./routers/unit');
 app.use('/api/unit' , unitRouter);
 
 
+const lessonRouter = require('./routers/lesson');
+app.use('/api/lesson' , lessonRouter);
+
+const examRouter = require('./routers/exam');
+app.use('/api/exam' , examRouter);
 
 app.use((error,req,res,next)=>{
     console.log(error);
@@ -166,19 +170,14 @@ app.use((error,req,res,next)=>{
 });
 
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 7000;
 console.log(port);
 const seqalize = require('./util/database');
 seqalize
 .sync()
 .then(result=>{
     console.log('conntect');
-    app.listen(port ,()=>{
-            // Currently you can kill ports running on TCP or UDP protocols
-            kill(port, 'tcp')
-            .then(console.log)
-            .catch(console.log)
-    });
+    app.listen(port);
 })
 .catch(err=>{
     console.log(err);

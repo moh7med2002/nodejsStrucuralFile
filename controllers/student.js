@@ -19,7 +19,8 @@ module.exports.registerStudent = async(req,res,next)=>
             name:name,
             LevelId:LevelId,
             ClassId:ClassId,
-            gender:gender
+            gender:gender,
+            money:0
         });
         await newStudent.save()
         res.status(200).json({message:'تم انشاء حساب الطالب'});

@@ -20,6 +20,10 @@ const Course = Seqalize.define('Course' , {
         type:DataTypes.INTEGER,
         required: true
     },
+    goals:{
+        type:DataTypes.INTEGER,
+        required: true
+    },
 });
 
 module.exports = Course;
