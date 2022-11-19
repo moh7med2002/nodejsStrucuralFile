@@ -91,25 +91,25 @@ Course.belongsToMany(Student, { through: "Student_Course", onDelete:"CASCADE" })
 Course.belongsTo(Subject);
 Course.belongsTo(Level);
 Course.belongsTo(Class);
-Course.hasMany(Unit);
+Course.hasMany(Unit ,{onDelete:"CASCADE"});
 
 // Unit
-Unit.hasMany(Lesson);
+Unit.hasMany(Lesson , {onDelete:"CASCADE"});
 Unit.belongsTo(Course);
-Unit.hasMany(Exam);
+Unit.hasMany(Exam , {onDelete:"CASCADE"});
 
 // Lesson
 Lesson.belongsTo(Unit);
 
 // Exam 
 Exam.belongsTo(Unit);
-Exam.hasMany(Question);
+Exam.hasMany(Question, {onDelete:"CASCADE"});
 Exam.hasMany(Grade , {onDelete:"CASCADE" });
 
 
 // Question
 Question.belongsTo(Exam)
-Question.hasMany(Answer)
+Question.hasMany(Answer , {onDelete:"CASCADE"})
 
 // Answer
 Answer.belongsTo(Question)
@@ -117,11 +117,11 @@ Answer.belongsTo(Question)
 // Forum 
 Forum.belongsToMany(Student, { through: "Student_Forum", onDelete:"CASCADE" });
 Forum.belongsTo(Teacher)
-Forum.hasMany(Post)
+Forum.hasMany(Post , {onDelete:"CASCADE"})
 
 // Post
 Post.belongsTo(Forum)
-Post.hasMany(Comment)
+Post.hasMany(Comment , {onDelete:"CASCADE"})
 
 // Comment
 Comment.belongsTo(Post)
