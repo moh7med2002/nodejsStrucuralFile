@@ -104,6 +104,8 @@ Lesson.belongsTo(Unit);
 // Exam 
 Exam.belongsTo(Unit);
 Exam.hasMany(Question);
+Exam.hasMany(Grade , {onDelete:"CASCADE" });
+
 
 // Question
 Question.belongsTo(Exam)
