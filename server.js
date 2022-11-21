@@ -94,7 +94,6 @@ Course.belongsTo(Subject);
 Course.belongsTo(Level);
 Course.belongsTo(Class);
 Course.hasMany(Unit ,{onDelete:"CASCADE"});
-Course.belongsTo(Section);
 
 // Unit
 Unit.hasMany(Lesson , {onDelete:"CASCADE"});
@@ -131,15 +130,21 @@ Comment.belongsTo(Post)
 
 // Level
 Level.hasMany(Class)
-Level.hasMany(Subject)
+Level.hasMany(Subject);
 
 //class
 Class.belongsTo(Level)
 Class.hasMany(Subject)
+Class.hasMany(Section);
 
 //subject
 Subject.belongsTo(Class)
 Subject.belongsTo(Level)
+Subject.belongsTo(Section);
+
+
+//  Section
+Section.belongsTo(Class);
 
 // refer routes
 const studentRouter = require('./routers/student');
