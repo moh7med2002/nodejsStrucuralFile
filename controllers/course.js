@@ -18,7 +18,7 @@ exports.createCourse = async(req,res,next)=>
 }
 
 
-module.exports.getCourse = async (req,res,next)=>{
+module.exports.getFullCourse = async (req,res,next)=>{
     const {courseId} = req.params;
     try{
         const course = await Course.findOne({where:{id:courseId}});
@@ -38,3 +38,34 @@ module.exports.getCourse = async (req,res,next)=>{
         next(err);
     }
 } 
+
+exports.getSingleCourse =async(req,res,next)=>
+{
+    const {courseId} = req.params;
+    try{
+        const course = await Course.findOne({where:{id:courseId}}); 
+        res.status(200).json({course})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+exports.deleteCourse =async(req,res,next)=>
+{
+    const {courseId} = req.params;
+    try{
+        const course = await Course.findOne({where:{id:courseId}});
+        await course.destroy(); 
+        res.status(200).json({message:"تم حذف الكورس"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
