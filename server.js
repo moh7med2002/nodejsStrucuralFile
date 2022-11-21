@@ -18,7 +18,11 @@ const fileStorage=multer.diskStorage({
     }
 })
 
+
+app.use(cors())
+
 app.use(barserBody.json());
+
 // save image
 app.use(multer({storage:fileStorage}).single('image'));
 app.use('/images', express.static(path.join(__dirname,'images')));
@@ -37,7 +41,6 @@ app.use((req,res,next)=>{
 });
 
 
-app.use(cors())
 
 
 const Student = require('./models/Student');

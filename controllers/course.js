@@ -5,20 +5,20 @@ exports.createCourse = async(req,res,next)=>
 {
     try{
         const {title,price,TeacherId,SubjectId, goals} = req.body;
-        // if(!req.file)
-        // {
-        //     const error = new Error('الصورة غير موجودة')
-        //     error.statusCode = 403
-        //     throw new error
-        // }
+        if(!req.file)
+        {
+            const error = new Error('الصورة غير موجودة')
+            error.statusCode = 403
+            throw new error
+        }
         const subject = await Subject.findOne({where:{id:SubjectId}});
-        // if(!subject)
-        // {
-        //     const error = new Error('المادة غير موجودة')
-        //     error.statusCode = 403
-        //     throw new error
-        // }
-        const imageName = req.file.pathname || "";
+        if(!subject)
+        {
+            const error = new Error('المادة غير موجودة')
+            error.statusCode = 403
+            throw new error
+        }
+        const imageName = req.file.pathname;
         const course = new Course({...req.body , image : imageName , LevelId:subject.LevelId , ClassId:subject.ClassId , price:+price});
         await course.save()
         res.status(201).json('تم انشاء الدورة')
