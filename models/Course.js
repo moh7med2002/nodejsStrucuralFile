@@ -21,7 +21,7 @@ const Course = Seqalize.define('Course' , {
         required: true
     },
     goals:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.TEXT,
         required: true
     },
 });
