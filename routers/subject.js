@@ -21,7 +21,7 @@ router.post('/create',async(req,res,next)=>{
 
 router.get('/all' , async(req,res,next)=>{
     try{
-        const subjects = await Subject.findAll();
+        const subjects = await Subject.findAll({ include: { all: true }});
         res.status(200).json({subjects:subjects})
     }
     catch(err)
