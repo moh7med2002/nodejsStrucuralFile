@@ -17,6 +17,7 @@ exports.createCourse = async(req,res,next)=>
     }
 }
 
+
 module.exports.getCourse = async (req,res,next)=>{
     const {courseId} = req.params;
     try{

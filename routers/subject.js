@@ -4,8 +4,8 @@ const Subject = require('../models/Subject')
 
 router.post('/create',async(req,res,next)=>{
     try{
-        const {title,ClassId,LevelId} = req.body
-        const subject = new Subject({title,ClassId,LevelId})
+        const {title,ClassId,LevelId, SectionId} = req.body
+        const subject = new Subject({title,ClassId,LevelId, SectionId:SectionId||null});
         await subject.save()
         res.status(200).json('تم إنشاء المادة ')
     }

@@ -20,7 +20,7 @@ module.exports.createSection = async (req,res,next)=>{
 module.exports.getSections = async(req,res,next)=>{
     try{
         const sections = await Section.findAll();
-        res.status({sections:sections});
+        res.status(200).json({sections:sections});
     }
     catch(err)
     {
