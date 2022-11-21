@@ -18,10 +18,25 @@ router.post('/create',async(req,res,next)=>{
     }
 })
 
-router.get('/:LevelId/classes',async(req,res,next)=>{
+// router.get('/:LevelId/classes',async(req,res,next)=>{
+//     try{
+//         const {LevelId} = req.params
+//         const classes = await Class.findAll({where:{LevelId:LevelId}})
+//         res.status(200).json({classes})
+//     }
+//     catch(err)
+//     {
+//         if(! err.statusCode){
+//             err.statusCode=500;
+//         }
+//         next(err);
+//     }
+// })
+
+
+router.get('/all' ,async(req,res,next)=>{
     try{
-        const {LevelId} = req.params
-        const classes = await Class.findAll({where:{LevelId:LevelId}})
+        const classes = await Class.findAll()
         res.status(200).json({classes})
     }
     catch(err)

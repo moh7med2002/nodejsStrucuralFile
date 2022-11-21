@@ -15,5 +15,20 @@ module.exports.createSection = async (req,res,next)=>{
         }
         next(err);
     }
-
 }
+
+module.exports.getSections = async(req,req,next)=>{
+    try{
+        const sections = await Section.findAll();
+        res.status({sections:sections});
+    }
+    catch(err)
+    {
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+

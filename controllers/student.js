@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 module.exports.registerStudent = async(req,res,next)=>
 {
     try{
-        const {name , email , password , gender , LevelId, ClassId} = req.body;
+        const {name , email , password , gender , LevelId, ClassId , SectionId} = req.body;
         const student = await Student.findOne({where:{email:email}});
         if (student){
             const error = new Error ('الايميل مستخدم');
@@ -20,7 +20,8 @@ module.exports.registerStudent = async(req,res,next)=>
             LevelId:LevelId,
             ClassId:ClassId,
             gender:gender,
-            money:0
+            money:0,
+            SectionId:SectionId||null
         });
         await newStudent.save()
         res.status(200).json({message:'تم انشاء حساب الطالب'});
