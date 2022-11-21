@@ -3,8 +3,14 @@ const Course = require('../models/Course')
 exports.createCourse = async(req,res,next)=>
 {
     try{
-        const {title,image,price,TeacherId,SubjectId,LevelId,ClassId, goals} = req.body;
-        const imageName = req.file ? req.file.pathname : image ;
+        const {title,price,TeacherId,SubjectId,LevelId,ClassId, goals} = req.body;
+        if(!req.file)
+        {
+            const error = new Error('الصورة غير موجودة')
+            error.statusCode = 403
+            throw new error
+        }
+        const imageName = req.file.pathname;
         const course = new Course({...req.body , image : imageName})
         await course.save()
         res.status(201).json('تم انشاء الدورة')
@@ -69,3 +75,24 @@ exports.deleteCourse =async(req,res,next)=>
         next(err);
     }
 }
+
+// exports.updateCourse = async(req,res,next)=>
+// {
+//     const {courseId} = req.params;
+//     const {title,price,SubjectId,LevelId,ClassId, goals} =  req.body
+//     try{
+//         const course = await Course.findOne({where:{id:courseId}})
+//         if(!course)
+//         {
+//             const error = new Error('الكورس غير موجود')
+//             error.statusCode = 404
+//             throw errror
+//         }
+//     }
+//     catch(err){
+//         if(! err.statusCode){
+//             err.statusCode=500;
+//         }
+//         next(err);
+//     }
+// }

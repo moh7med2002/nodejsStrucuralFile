@@ -18,22 +18,11 @@ const fileStorage=multer.diskStorage({
     }
 })
 
-const pdfStorage=multer.diskStorage({
-    destination:(req,file,cb)=>{
-        cb(null, 'attachments');
-    },
-    filename:(req,file,cb)=>{
-        cb(null, Date.now()+"-" + file.originalname)
-    }
-})
-
 app.use(barserBody.json());
 // save image
 app.use(multer({storage:fileStorage}).single('image'));
 app.use('/images', express.static(path.join(__dirname,'images')));
-// save pdf file for teacher cv
-app.use(multer({storage:fileStorage}).single('file'));
-app.use('/attachments', express.static(path.join(__dirname,'attachments')));
+
 
 
 
