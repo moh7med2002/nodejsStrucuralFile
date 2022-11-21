@@ -175,6 +175,10 @@ app.use('/api/lesson' , lessonRouter);
 const examRouter = require('./routers/exam');
 app.use('/api/exam' , examRouter);
 
+
+const sectionRouter = require('./routers/section');
+app.use('/api/section' , sectionRouter);
+
 app.use((error,req,res,next)=>{
     console.log(error);
     const status=error.statusCode||500;
@@ -184,11 +188,12 @@ app.use((error,req,res,next)=>{
 });
 
 
+
 const port = process.env.PORT || 9000;
 console.log(port);
 const seqalize = require('./util/database');
 seqalize
-.sync({force:true})
+.sync()
 .then(result=>{
     console.log('conntect');
     app.listen(port);
