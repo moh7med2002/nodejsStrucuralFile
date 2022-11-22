@@ -1,5 +1,7 @@
 const Course = require('../models/Course');
 const Subject = require('../models/Subject')
+const fs = require('fs');
+const path = require('path');
 
 exports.createCourse = async(req,res,next)=>
 {
@@ -87,6 +89,9 @@ exports.deleteCourse =async(req,res,next)=>
     const {courseId} = req.params;
     try{
         const course = await Course.findOne({where:{id:courseId}});
+        if(course.image){
+            clearImage(course.image);
+        }
         await course.destroy(); 
         res.status(200).json({message:"تم حذف الكورس"})
     }
@@ -118,3 +123,12 @@ exports.deleteCourse =async(req,res,next)=>
 //         next(err);
 //     }
 // }
+
+
+
+const clearImage=(filePath)=>{
+    filePath=path.join(__dirname,'..',`images/${filePath}`);
+    fs.unlink(filePath,(err)=>{
+        console.log(err);
+    })
+}
