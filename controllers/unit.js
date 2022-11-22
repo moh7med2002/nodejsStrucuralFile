@@ -1,4 +1,6 @@
-const Unit = require('../models/Unit')
+const Unit = require('../models/Unit');
+
+
 exports.createUnit = async(req,res,next)=>
 {
     try{
@@ -15,3 +17,41 @@ exports.createUnit = async(req,res,next)=>
     }
 }
 
+
+
+module.exports.getUnits = async (req,res,next)=>{
+    try{
+        const units = await Unit.findAll();
+        res.status(201).json({units:units});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+} 
+
+
+module.exports.updateUnit = async (req,res , next)=>{
+    const {unitId} = req.params;
+    const {title} = req.body;
+    try{
+        const unit = await Unit.findOne({where:{id:unitId}});
+        if(!unit)
+        {
+            const error = new Error('الوحدة غير موجود')
+            error.statusCode = 404
+            throw error;
+        }
+        unit.title = title;
+        await unit.save();
+        res.status(201).json({message:"تم تحديث الوحدة بنجاح"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
