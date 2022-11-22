@@ -103,26 +103,32 @@ exports.deleteCourse =async(req,res,next)=>
     }
 }
 
-// exports.updateCourse = async(req,res,next)=>
-// {
-//     const {courseId} = req.params;
-//     const {title,price,SubjectId,LevelId,ClassId, goals} =  req.body
-//     try{
-//         const course = await Course.findOne({where:{id:courseId}})
-//         if(!course)
-//         {
-//             const error = new Error('الكورس غير موجود')
-//             error.statusCode = 404
-//             throw errror
-//         }
-//     }
-//     catch(err){
-//         if(! err.statusCode){
-//             err.statusCode=500;
-//         }
-//         next(err);
-//     }
-// }
+exports.updateCourse = async(req,res,next)=>
+{
+    const {courseId} = req.params;
+    const {title, price, TeacherId , goals} =  req.body;
+    try{
+        const course = await Course.findOne({where:{id:courseId}})
+        if(!course)
+        {
+            const error = new Error('الكورس غير موجود')
+            error.statusCode = 404
+            throw error
+        }
+        course.title = title;
+        course.price = +price;
+        course.goals = goals;
+        course.TeacherId = TeacherId;
+        await course.save();
+        res.status(201).json({message:"تم تعديل الكورس بنجاح"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
 
 
 
