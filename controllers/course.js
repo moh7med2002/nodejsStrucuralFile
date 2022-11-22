@@ -32,6 +32,20 @@ exports.createCourse = async(req,res,next)=>
 }
 
 
+module.exports.getAllCourses = async (req,res,next)=>{
+    try{
+        const courses = await Course.findAll({include:{all:true}});
+        res.status(200).json({courses:courses});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+
 module.exports.getFullCourse = async (req,res,next)=>{
     const {courseId} = req.params;
     try{
