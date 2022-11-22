@@ -19,7 +19,7 @@ const fileStorage=multer.diskStorage({
 })
 
 
-app.use(cors())
+app.use(cors());
 
 app.use(barserBody.json());
 
