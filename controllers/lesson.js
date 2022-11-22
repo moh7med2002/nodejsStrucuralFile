@@ -59,3 +59,19 @@ module.exports.deleteLesson = async (req,res,next)=>{
         next(err);
     }
 }
+
+
+
+module.exports.getUnitLesson = async(req,res,next)=>{
+    const {unitId} = req.params;
+    try{
+        const lessons = await Lesson.findAll({where:{UnitId:unitId}});
+        res.status(200).json({lessons:lessons});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
