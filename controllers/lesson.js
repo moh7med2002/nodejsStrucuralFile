@@ -39,3 +39,23 @@ module.exports.updateLesson = async (req,res,next)=>{
         next(err);
     }
 } 
+
+module.exports.deleteLesson = async (req,res,next)=>{
+    const {lessonId} = req.params;
+    try{
+        const lesson = await Lesson.findOne({where:{id:lessonId}});
+        if(!lesson){
+            const error = new Error('الدرس غير موجود')
+            error.statusCode = 404
+            throw error;
+        }
+        await lesson.destroy();
+        res.status(201).json({message:"تم حذف الدرس بنجاح"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
