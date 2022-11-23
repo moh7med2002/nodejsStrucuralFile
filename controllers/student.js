@@ -1,4 +1,5 @@
 const Student = require('../models/Student');
+const Course = require('../models/Course');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -63,5 +64,27 @@ exports.loginStudent = async(req,res,next)=>{
             err.statusCode=500;
         }
         next(err);
+    }
+}
+
+
+
+// get courses which student can register
+module.exports.getAllowedCourses = async(req,res,next)=>{
+    const studentId = req.studentId;
+    try{
+        const currentStudent = await Student.findOne({where:{id:studentId}});
+        if(!currentStudent){
+            const error = new Error('يرجى تسجيل الدخول');
+            error.statusCode = 422;
+            throw error;
+        }
+        const courses = await Course.findAll(
+            {where:{LevelId:currentStudent.LevelId, ClassId:currentStudent.ClassId},include:{all:true}}
+        );
+        res.status(200).json({courses:courses});
+    }
+    catch(err){
+        console.log(err);
     }
 }

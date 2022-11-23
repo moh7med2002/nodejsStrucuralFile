@@ -48,6 +48,7 @@ module.exports.getAllCourses = async (req,res,next)=>{
 }
 
 
+// get all data of course 
 module.exports.getFullCourse = async (req,res,next)=>{
     const {courseId} = req.params;
     try{
