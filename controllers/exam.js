@@ -74,7 +74,7 @@ exports.getExam = async(req,res,next)=>
     try{
         const {ExamId} = req.params;
         const exam = await Exam.findOne({where:{id:ExamId}});
-        const questions = await exam.getQuestions({order:"random()", limit:exam.questionsNumber});
+        const questions = await exam.getQuestions();
         const NewQuestions = []
         for(const question of questions)
         {
