@@ -48,14 +48,32 @@ module.exports.createQuestion = async(req,res,next)=>{
         }
         next(err);
     }
+}
 
+module.exports.updateExam = async (req,res,next) => {
+    const {examId} = req.params;
+    const {title,duration , questionsNumber} = req.body;
+    try{
+        const exam = await Exam.findOne({where:{id:examId}});
+        exam.title = title;
+        exam.duration = duration;
+        exam.questionsNumber = questionsNumber;
+        await exam.save();
+        res.status(201).json({message : "تم تعديل الإختبار"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
 }
 
 exports.getExam = async(req,res,next)=>
 {
     try{
-        const {ExamId} = req.params
-        const exam = await Exam.findOne({where:{id:ExamId}})
+        const {ExamId} = req.params;
+        const exam = await Exam.findOne({where:{id:ExamId}});
         const questions = await exam.getQuestions({order:"random()", limit:exam.questionsNumber});
         const NewQuestions = []
         for(const question of questions)
