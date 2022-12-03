@@ -7,7 +7,7 @@ exports.createExam = async(req,res,next)=>
 {
     try{
         const {title,duration,UnitId , questionsNumber} = req.body
-        const exam = await Exam.create(req.body);
+        const exam = await Exam.create({title,duration,UnitId , questionsNumber:+questionsNumber});
         res.status(201).json({message:"تم انشاء الاختبار"})
     }
     catch(err){
