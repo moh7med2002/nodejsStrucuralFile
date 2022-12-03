@@ -47,6 +47,27 @@ module.exports.getUnits = async (req,res,next)=>{
 } 
 
 
+module.exports.getUnitExams = async (req,res,next) => {
+    const {unitId} = req.params;
+    try{
+        const unit = await Unit.findOne({where:{id:unitId}}); 
+        if(!unit)
+        {
+            const error = new Error('الوحدة غير موجود')
+            error.statusCode = 404
+            throw error;
+        }
+        const exams = await unit.getExams();
+        res.status(200).json({exams : exams});
+    } 
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
 module.exports.updateUnit = async (req,res , next)=>{
     const {unitId} = req.params;
     const {title} = req.body;
