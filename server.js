@@ -179,8 +179,6 @@ app.use((error,req,res,next)=>{
     res.status(status).json({message:message, data:data});
 });
 
-
-
 const port = process.env.PORT || 9000;
 console.log(port);
 const seqalize = require('./util/database');

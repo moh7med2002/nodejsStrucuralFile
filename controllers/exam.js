@@ -2,11 +2,12 @@ const Exam = require('../models/Exam');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 
+
 exports.createExam = async(req,res,next)=>
 {
     try{
-        const {title,duration,UnitId} = req.body
-        const exam = await Exam.create(req.body)
+        const {title,duration,UnitId , questionsNumber} = req.body
+        const exam = await Exam.create(req.body);
         res.status(201).json({message:"تم انشاء الاختبار"})
     }
     catch(err){
@@ -55,7 +56,7 @@ exports.getExam = async(req,res,next)=>
     try{
         const {ExamId} = req.params
         const exam = await Exam.findOne({where:{id:ExamId}})
-        const questions = await exam.getQuestions()
+        const questions = await exam.getQuestions({order:"random()", limit:exam.questionsNumber});
         const NewQuestions = []
         for(const question of questions)
         {

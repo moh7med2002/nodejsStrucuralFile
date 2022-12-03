@@ -12,6 +12,10 @@ const Exam = Seqalize.define('Exam' , {
         type:DataTypes.STRING,
         required: true
     },
+    questionsNumber:{
+        type:DataTypes.INTEGER,
+        required:true
+    },
     duration:{
         type:DataTypes.INTEGER,
         required:true
