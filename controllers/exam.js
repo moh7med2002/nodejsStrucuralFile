@@ -1,6 +1,7 @@
 const Exam = require('../models/Exam');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
+const seqalize  = require('../util/database');
 
 
 exports.createExam = async(req,res,next)=>
@@ -95,11 +96,21 @@ exports.getExamForStudent = async(req,res,next)=>
 {
     try{
         const {ExamId} = req.params;
+        const foundExam = await Exam.findOne({where:{id:ExamId}});
         const exam = await Exam.findOne({
             where:{id:ExamId},
-            include:Question
+            include:{
+                model:Question,
+                separate:true,
+                order:seqalize.random(),
+                limit:foundExam.questionsNumber,
+                include:{
+                    model:Answer,
+                    separate:true,
+                    order:seqalize.random(),
+                }
+            },
         });
-        // res.status(200).json({...exam.toJSON(),questions:[]})
         res.status(200).json({exam});
     }
     catch(err){
