@@ -5,6 +5,7 @@ const examController = require('../controllers/exam');
 router.post('/create',examController.createExam)
 router.post('/question/create/:examId' , examController.createQuestion);
 router.post('/mark' , examController.markExam);
+router.get('/student/:ExamId' , examController.getExamForStudent);
 router.get('/:ExamId',examController.getExam);
 router.put('/:examId' , examController.updateExam);
 
