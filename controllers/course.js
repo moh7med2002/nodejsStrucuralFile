@@ -1,5 +1,9 @@
 const Course = require('../models/Course');
-const Subject = require('../models/Subject')
+const Subject = require('../models/Subject');
+const Unit = require('../models/Unit');
+const Lesson = require('../models/Lesson');
+const Exam = require('../models/Exam');
+const Question = require('../models/Question')
 const fs = require('fs');
 const path = require('path');
 
@@ -52,15 +56,33 @@ module.exports.getAllCourses = async (req,res,next)=>{
 module.exports.getFullCourse = async (req,res,next)=>{
     const {courseId} = req.params;
     try{
-        const course = await Course.findOne({where:{id:courseId}});
-        const units = await course.getUnits();
-        let savedCourse = [];
-        for (const unit of units) {
-            const lessons = await unit.getLessons();
-            const exams = await unit.getExams({include:true});
-            savedCourse.push({unit:{...unit.toJSON() , lessons , exams}});
-        }
-        res.status(200).json({course: { ...course.toJSON() , units:savedCourse}});
+        // const course = await Course.findOne({where:{id:courseId}});
+        // const units = await course.getUnits();
+        // let savedCourse = [];
+        // for (const unit of units) {
+        //     const lessons = await unit.getLessons();
+        //     const exams = await unit.getExams({include:true});
+        //     savedCourse.push({unit:{...unit.toJSON() , lessons , exams}});
+        // }
+        // res.status(200).json({course: { ...course.toJSON() , units:savedCourse}});
+        const course = await Course.findOne({
+            where:{id:courseId},
+            include:{
+                model: Unit,
+                include:[
+                    {
+                        model : Exam ,
+                        include :{
+                            model : Question
+                        }
+                    },
+                    {
+                        model : Lesson
+                    }
+                ]
+            }
+        });
+        res.status(200).json({course});
     }
     catch(err){
         if(! err.statusCode){
