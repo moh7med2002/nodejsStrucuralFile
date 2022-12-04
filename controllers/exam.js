@@ -2,6 +2,7 @@ const Exam = require('../models/Exam');
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const seqalize  = require('../util/database');
+const Grade = require('../models/Grade');
 
 
 exports.createExam = async(req,res,next)=>
@@ -124,16 +125,19 @@ exports.getExamForStudent = async(req,res,next)=>
 
 module.exports.markExam = async(req,res,next)=>{
     const {answers} = req.body;
+    const studentId = req.studentId;
+    const examId = req.examId;
     let TotalMark = 0;
     try{
+        const foundExam = await Exam.findOne({where:{id:examId}});
         for (const answer of answers) {
             const fetchedAnswer = await Answer.findOne({where:{id:answer.answer}});
             if(fetchedAnswer.isRight){
                 TotalMark+=1;
             }
         }
-        console.log(TotalMark);
-        res.status(200).json('تم تصليح الإختبار')
+        const grade = await Grade.create({StudentId:studentId , ExamId:examId , studentGrade:TotalMark , totalGrade : foundExam.questionsNumber});
+        res.status(200).json({message:"تم تصليح الإختبار" , grade :TotalMark , totalGrade:foundExam.questionsNumber});
     }
     catch(err){
         if(! err.statusCode){
