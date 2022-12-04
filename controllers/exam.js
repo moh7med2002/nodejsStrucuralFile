@@ -97,6 +97,10 @@ exports.getExamForStudent = async(req,res,next)=>
 {
     try{
         const {ExamId} = req.params;
+        const grade = await Grade.findOne({StudentId:req.studentId , ExamId:ExamId});
+        if(grade){
+            return res.status(200).json({grade , hasExam:true});
+        }
         const foundExam = await Exam.findOne({where:{id:ExamId}});
         const exam = await Exam.findOne({
             where:{id:ExamId},
@@ -112,7 +116,7 @@ exports.getExamForStudent = async(req,res,next)=>
                 }
             },
         });
-        res.status(200).json({exam});
+        res.status(200).json({exam , hasExam:false});
     }
     catch(err){
         if(! err.statusCode){
