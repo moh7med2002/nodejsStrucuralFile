@@ -126,7 +126,7 @@ exports.getExamForStudent = async(req,res,next)=>
 module.exports.markExam = async(req,res,next)=>{
     const {answers} = req.body;
     const studentId = req.studentId;
-    const examId = req.examId;
+    const examId = req.params.examId;
     let TotalMark = 0;
     try{
         const foundExam = await Exam.findOne({where:{id:examId}});
