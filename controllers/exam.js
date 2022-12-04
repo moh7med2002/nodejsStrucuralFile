@@ -97,7 +97,7 @@ exports.getExamForStudent = async(req,res,next)=>
 {
     try{
         const {ExamId} = req.params;
-        const grade = await Grade.findOne({StudentId:req.studentId , ExamId:ExamId});
+        const grade = await Grade.findOne({where:{StudentId:req.studentId , ExamId:ExamId}});
         if(grade){
             return res.status(200).json({grade , hasExam:true});
         }
