@@ -57,7 +57,7 @@ module.exports.getFullCourse = async (req,res,next)=>{
         let savedCourse = [];
         for (const unit of units) {
             const lessons = await unit.getLessons();
-            const exams = await unit.getExams();
+            const exams = await unit.getExams({include:true});
             savedCourse.push({unit:{...unit.toJSON() , lessons , exams}});
         }
         res.status(200).json({course: { ...course.toJSON() , units:savedCourse}});
