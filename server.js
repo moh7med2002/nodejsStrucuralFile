@@ -176,6 +176,9 @@ app.use('/api/exam' , examRouter);
 const sectionRouter = require('./routers/section');
 app.use('/api/section' , sectionRouter);
 
+const adminRouter = require('./routers/admin');
+app.use('/api/admin' , adminRouter);
+
 app.use((error,req,res,next)=>{
     console.log(error);
     const status=error.statusCode||500;
