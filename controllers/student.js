@@ -3,6 +3,7 @@ const Course = require('../models/Course');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Grade = require('../models/Grade');
+const Exam = require('../models/Exam');
 
 module.exports.registerStudent = async(req,res,next)=>
 {
@@ -100,7 +101,7 @@ module.exports.getGrades = async (req,res,next) => {
     const studentId = req.studentId;
     try{
         const grades = await Grade.findAll({where:{StudentId : studentId} ,
-        include : {all:true}
+        include : {model: Exam}
         })
         res.status(200).json({grades});
     }
