@@ -7,4 +7,6 @@ router.post('/login',studentController.loginStudent);
 
 router.get('/allowedCourses' , studentAuth , studentController.getAllowedCourses);
 
+router.get('/grades' , studentAuth , studentController.getGrades);
+
 module.exports = router;
