@@ -138,6 +138,11 @@ Subject.belongsTo(Section);
 //  Section
 Section.belongsTo(Class);
 
+
+// grade
+Grade.belongsTo(Exam); 
+
+
 // refer routes
 const studentRouter = require('./routers/student');
 app.use('/api/student' , studentRouter);
