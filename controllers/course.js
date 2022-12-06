@@ -56,15 +56,6 @@ module.exports.getAllCourses = async (req,res,next)=>{
 module.exports.getFullCourse = async (req,res,next)=>{
     const {courseId} = req.params;
     try{
-        // const course = await Course.findOne({where:{id:courseId}});
-        // const units = await course.getUnits();
-        // let savedCourse = [];
-        // for (const unit of units) {
-        //     const lessons = await unit.getLessons();
-        //     const exams = await unit.getExams({include:true});
-        //     savedCourse.push({unit:{...unit.toJSON() , lessons , exams}});
-        // }
-        // res.status(200).json({course: { ...course.toJSON() , units:savedCourse}});
         const course = await Course.findOne({
             where:{id:courseId},
             include:{

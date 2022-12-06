@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Subject = require('../models/Subject')
+const Subject = require('../models/Subject');
+const adminAuth = require('../middelware/AdminAuth');
 
-router.post('/create',async(req,res,next)=>{
+
+router.post('/create', adminAuth , async(req,res,next)=>{
     try{
         const {title,ClassId,LevelId, SectionId} = req.body
         const subject = new Subject({title,ClassId,LevelId, SectionId:SectionId||null});

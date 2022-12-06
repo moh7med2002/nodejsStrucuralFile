@@ -61,6 +61,7 @@ const Subject = require('./models/Subject');
 const Grade = require('./models/Grade');
 const Teacher = require('./models/Teacher');
 const Section = require('./models/Section');
+const Wallet = require('./models/Wallet')
 
 
 //  parent
@@ -74,6 +75,7 @@ Student.belongsTo(Section);
 Student.belongsToMany(Course, { through: "Student_Course", onDelete:"CASCADE" });
 Student.belongsToMany(Forum, { through: "Student_Forum", onDelete:"CASCADE"});
 Student.hasMany(Grade , {onDelete:"CASCADE" });
+Student.hasMany(Wallet , {onDelete:"CASCADE" });
 
 //  Teacher
 Teacher.hasMany(Course , {onDelete:"SET NULL"});
@@ -142,6 +144,9 @@ Section.belongsTo(Class);
 // grade
 Grade.belongsTo(Exam); 
 
+// Wallet
+Wallet.belongsTo(Student);
+
 
 // refer routes
 const studentRouter = require('./routers/student');
@@ -178,6 +183,9 @@ app.use('/api/section' , sectionRouter);
 
 const adminRouter = require('./routers/admin');
 app.use('/api/admin' , adminRouter);
+
+const walletRouter = require('./routers/wallet');
+app.use('/api/wallet' , walletRouter);
 
 app.use((error,req,res,next)=>{
     console.log(error);

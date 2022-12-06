@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const lessonController = require('../controllers/lesson');
 
-router.post('/create',lessonController.createLesson);
-router.put('/:lessonId' , lessonController.updateLesson);
-router.delete('/:lessonId' , lessonController.deleteLesson);
+const adminAuth = require('../middelware/AdminAuth');
+
+router.post('/create', adminAuth ,lessonController.createLesson);
+router.put('/:lessonId' , adminAuth ,lessonController.updateLesson);
+router.delete('/:lessonId' , adminAuth , lessonController.deleteLesson);
 router.get('/unit/:unitId' , lessonController.getUnitLesson);
 
 module.exports = router;
