@@ -128,3 +128,26 @@ module.exports.getMoney = async (req,res,next) =>{
         next(err);
     }
 }
+
+
+module.exports.registerCourse = async (req,res,next) =>{
+    const studentId = req.studentId;
+    const {courseId} = req.params;
+    try{
+        const course = await Course.findOne({where: {id : courseId}});
+        const student = await Student.findOne({where : {id : studentId}});
+        if(course.price > student.money){
+            const error = new Error('المبلغ غير كافي');
+            error.statusCode = 422;
+            throw error;
+        }
+        await course.addStudent({StudentId:studentId});
+        res.status(201).json({message:"تم الإشتراك في الكورس بنجاح"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
