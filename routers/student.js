@@ -9,4 +9,6 @@ router.get('/allowedCourses' , studentAuth , studentController.getAllowedCourses
 
 router.get('/grades' , studentAuth , studentController.getGrades);
 
+router.get('/money' , studentAuth , studentController.getMoney);
+
 module.exports = router;

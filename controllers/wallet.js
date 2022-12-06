@@ -90,7 +90,7 @@ exports.getWalletById = async(req,res,next)=>
 {
     try{
         const {walletId} = req.params
-        const wallet = await Wallet.findOne({where:{id:walletId}})
+        const wallet = await Wallet.findOne({where:{id:walletId , include:{model : Student}}})
         res.status(200).json({wallet})
     }
     catch(err)

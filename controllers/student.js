@@ -112,3 +112,19 @@ module.exports.getGrades = async (req,res,next) => {
         next(err);
     }
 }
+
+
+// get student own money
+module.exports.getMoney = async (req,res,next) =>{
+    const studentId = req.studentId;
+    try{
+        const studnet = await Student.findOne({where:{id : studentId}})
+        res.status(200).json({money : studnet.money});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
