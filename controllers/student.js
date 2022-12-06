@@ -142,6 +142,8 @@ module.exports.registerCourse = async (req,res,next) =>{
             throw error;
         }
         await course.addStudent({StudentId:studentId});
+        student.money -= course.price;
+        await student.save(); 
         res.status(201).json({message:"تم الإشتراك في الكورس بنجاح"});
     }
     catch(err){
