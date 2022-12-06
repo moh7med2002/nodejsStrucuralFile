@@ -13,4 +13,6 @@ router.get('/money' , studentAuth , studentController.getMoney);
 
 router.post('/course/register/:courseId' , studentAuth , studentController.registerCourse);
 
+router.get('/my-coures' , studentAuth ,studentController.getRegistredCourses);
+
 module.exports = router;

@@ -141,10 +141,27 @@ module.exports.registerCourse = async (req,res,next) =>{
             error.statusCode = 422;
             throw error;
         }
-        await course.addStudent({StudentId:studentId});
+        await course.addStudent(student);
         student.money -= course.price;
         await student.save(); 
         res.status(201).json({message:"تم الإشتراك في الكورس بنجاح"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+
+
+module.exports.getRegistredCourses = async (req,res,next) => {
+    const studentId = req.studentId;
+    try{
+        const student = await Student.findOne({where : {id : studentId}});
+        const courses = await student.getCourses();
+        res.status(200).json({courses});
     }
     catch(err){
         if(! err.statusCode){

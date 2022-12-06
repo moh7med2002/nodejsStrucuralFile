@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize')
 
 
-// palestine db
-// const sequelize = new Sequelize('rescteeh_schools_db','rescteeh_root_user','059283805928388',{dialect:'mysql',host:"localhost"})
 
 
 // local db

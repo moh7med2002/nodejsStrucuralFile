@@ -199,7 +199,7 @@ const port = process.env.PORT || 9000;
 console.log(port);
 const seqalize = require('./util/database');
 seqalize
-.sync({force:true})
+.sync()
 .then(result=>{
     console.log('conntect');
     app.listen(port);
