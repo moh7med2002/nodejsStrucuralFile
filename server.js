@@ -72,7 +72,7 @@ Student.belongsTo(Parent);
 Student.belongsTo(Level);
 Student.belongsTo(Class);
 Student.belongsTo(Section);
-Student.belongsToMany(Course, { through: "Student_Course", onDelete:"CASCADE" });
+Student.belongsToMany(Course, { through: "Student_Course"});
 Student.belongsToMany(Forum, { through: "Student_Forum", onDelete:"CASCADE"});
 Student.hasMany(Grade , {onDelete:"CASCADE" });
 Student.hasMany(Wallet , {onDelete:"CASCADE" });
@@ -83,7 +83,7 @@ Teacher.hasMany(Forum , {onDelete:"SET NULL"});
 
 // Course
 Course.belongsTo(Teacher);
-Course.belongsToMany(Student, { through: "Student_Course", onDelete:"CASCADE" });
+Course.belongsToMany(Student, { through: "Student_Course"});
 Course.belongsTo(Subject);
 Course.belongsTo(Level);
 Course.belongsTo(Class);
