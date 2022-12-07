@@ -1,4 +1,5 @@
 const Teacher = require('../models/Teacher');
+const Course = require('../models/Course');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -69,6 +70,23 @@ exports.getTeachers = async(req,res,next)=>
     try{
         const teachers = await Teacher.findAll()
         res.status(200).json({teachers})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.getTeacherCourses = async (req,res,next) => {
+    const teacherId = req.teacherId;
+    try{
+        const coures = await Course.findAll({
+            where:{TeacherId: teacherId},
+            include:{ all : true}
+        });
+        res.status(200).json({coures});
     }
     catch(err){
         if(! err.statusCode){
