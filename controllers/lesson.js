@@ -77,7 +77,7 @@ module.exports.getUnitLesson = async(req,res,next)=>{
 }
 
 module.exports.getSingleLesson = async (req,res,next) => {
-    const {lessonId} = req.params.lessonId;
+    const {lessonId} = req.params;
     try{
         const lesson = await Lesson.findOne({where:{id : lessonId}});
         res.status(200).json({lesson});
