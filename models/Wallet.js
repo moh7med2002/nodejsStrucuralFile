@@ -13,7 +13,7 @@ const Wallet = Seqalize.define('Wallet' , {
         required: true
     },
     money:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.DOUBLE,
         required: true
     }
 });

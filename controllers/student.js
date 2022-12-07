@@ -82,7 +82,7 @@ module.exports.getAllowedCourses = async(req,res,next)=>{
             throw error;
         }
         const courses = await Course.findAll(
-            {where:{LevelId:currentStudent.LevelId, ClassId:currentStudent.ClassId},include:{all:true}}
+            {where:{LevelId:currentStudent.LevelId, ClassId:currentStudent.ClassId , SectionId : currentStudent.SectionId},include:{all:true}}
         );
         res.status(200).json({courses:courses});
     }

@@ -17,7 +17,7 @@ const Course = Seqalize.define('Course' , {
         required: true
     },
     price:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.DOUBLE,
         required: true
     },
     goals:{

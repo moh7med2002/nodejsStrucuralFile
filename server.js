@@ -87,6 +87,7 @@ Course.belongsToMany(Student, { through: "Student_Course"});
 Course.belongsTo(Subject);
 Course.belongsTo(Level);
 Course.belongsTo(Class);
+Course.belongsTo(Section);
 Course.hasMany(Unit ,{onDelete:"CASCADE"});
 
 // Unit

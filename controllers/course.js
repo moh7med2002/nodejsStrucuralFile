@@ -25,7 +25,7 @@ exports.createCourse = async(req,res,next)=>
             throw new error
         }
         const imageName = req.file.filename;
-        const course = new Course({...req.body , image : imageName , LevelId:subject.LevelId , ClassId:subject.ClassId , price:+price});
+        const course = new Course({...req.body , image : imageName , LevelId:subject.LevelId , ClassId:subject.ClassId, SectionId:subject.SectionId , price:+price});
         await course.save()
         res.status(201).json('تم انشاء الدورة')
     }
