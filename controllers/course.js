@@ -6,6 +6,7 @@ const Exam = require('../models/Exam');
 const Question = require('../models/Question')
 const fs = require('fs');
 const path = require('path');
+const Student = require('../models/Student');
 
 exports.createCourse = async(req,res,next)=>
 {
@@ -58,20 +59,25 @@ module.exports.getFullCourse = async (req,res,next)=>{
     try{
         const course = await Course.findOne({
             where:{id:courseId},
-            include:{
-                model: Unit,
-                include:[
-                    {
-                        model : Exam ,
-                        include :{
-                            model : Question
+            include:[
+                {
+                    model  : Student
+                },
+                {
+                    model: Unit,
+                    include:[
+                        {
+                            model : Exam ,
+                            include :{
+                                model : Question
+                            }
+                        },
+                        {
+                            model : Lesson
                         }
-                    },
-                    {
-                        model : Lesson
-                    }
-                ]
-            }
+                    ]
+                }
+            ]
         });
         res.status(200).json({course});
     }
