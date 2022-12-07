@@ -1,4 +1,5 @@
 const Admin = require('../models/Admin');
+const Student = require('../models/Student')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -62,3 +63,15 @@ exports.loginAdmin = async(req,res,next)=>{
 }
 
 
+module.exports.getAllStudents = async (req,res,next) =>{
+    try{
+        const students = await Student.findAll({include:{all:true}});
+        res.status(200).json({students});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
