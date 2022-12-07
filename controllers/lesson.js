@@ -75,3 +75,17 @@ module.exports.getUnitLesson = async(req,res,next)=>{
         next(err);
     }
 }
+
+module.exports.getSingleLesson = async (req,res,next) => {
+    const {lessonId} = req.params.lessonId;
+    try{
+        const lesson = await Lesson.findOne({where:{id : lessonId}});
+        res.status(200).json({lesson});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
