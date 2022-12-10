@@ -10,7 +10,7 @@ router.post('/teacher/create', teacherAuth ,unitController.createUnitByTeacher);
 
 
 
-router.put('teacher/:unitId' , teacherAuth , unitController.updateUnitByTeacher);
+router.put('/teacher/:unitId' , teacherAuth , unitController.updateUnitByTeacher);
 router.put('/:unitId' , adminAuth , unitController.updateUnitByAdmin);
 
 
