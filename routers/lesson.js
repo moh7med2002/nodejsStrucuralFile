@@ -9,9 +9,14 @@ const teacherAuth = require('../middelware/TeacherAuth')
 router.post('/create', adminAuth ,lessonController.createLessonByAdmin);
 router.post('/teacher/create', teacherAuth ,lessonController.createLessonByAdmin);
 
+router.put('/teacher/:lessonId' , teacherAuth ,lessonController.updateLessonByAdmin);
 router.put('/:lessonId' , adminAuth ,lessonController.updateLessonByAdmin);
 
+
+router.delete('/teacher/:lessonId' , teacherAuth , lessonController.deleteLesson);
 router.delete('/:lessonId' , adminAuth , lessonController.deleteLesson);
+
+
 router.get('/unit/:unitId' , lessonController.getUnitLesson);
 router.get('/lessons/:lessonId' , studentAuth , lessonController.getSingleLesson);
 
