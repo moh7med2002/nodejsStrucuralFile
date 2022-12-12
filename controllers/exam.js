@@ -154,9 +154,9 @@ module.exports.markExam = async(req,res,next)=>{
 
 
 module.exports.getAllowedExamsForStudent = async (req,res,next) =>{
-    // const studentId = req.studentId;
+    const studentId = req.studentId;
     try{
-        const student = await Student.findOne({where : {id : 1}});
+        const student = await Student.findOne({where : {id : studentId}});
         const courses = await student.getCourses();
         let units = [];
         for (const course of courses) {
