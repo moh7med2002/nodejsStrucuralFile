@@ -3,6 +3,7 @@ const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const seqalize  = require('../util/database');
 const Grade = require('../models/Grade');
+const Student = require('../models/Student');
 
 
 exports.createExam = async(req,res,next)=>
@@ -142,6 +143,24 @@ module.exports.markExam = async(req,res,next)=>{
         }
         const grade = await Grade.create({StudentId:studentId , ExamId:examId , studentGrade:TotalMark , totalGrade : foundExam.questionsNumber});
         res.status(200).json({message:"تم تصليح الإختبار" , grade :TotalMark , totalGrade:foundExam.questionsNumber});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+
+module.exports.getAllowedExamsForStudent = async (req,res,next) =>{
+    // const studentId = req.studentId;
+    try{
+        const student = await Student.findOne({where : {id : 1}});
+        const courses = await student.getCourses();
+        const units = await courses.getUnites();
+        const exams = await units.getExams();
+        res.status(200).json({exams});
     }
     catch(err){
         if(! err.statusCode){

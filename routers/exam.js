@@ -19,6 +19,9 @@ router.post('/question/create/:examId' , adminAuth ,examController.createQuestio
 
 router.post('/mark/:examId' , studentAuth ,examController.markExam);
 
+
+router.get('/student/allowed'  , examController.getAllowedExamsForStudent);
+
 router.get('/student/:ExamId' , studentAuth ,examController.getExamForStudent);
 
 router.get('/:ExamId',examController.getExam);
