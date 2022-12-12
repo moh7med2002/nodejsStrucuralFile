@@ -164,8 +164,13 @@ module.exports.getAllowedExamsForStudent = async (req,res,next) =>{
             const newUnits = [...units , ...unit_s];
             units = newUnits;
         }
-        // const exams = await units.getExams();
-        res.status(200).json({units});
+        let exams = [];
+        for (const unit of units) {
+            const exam_s = await unit.getExams();
+            const newExams = [...exams , ...exam_s];
+            exams = newExams;
+        }
+        res.status(200).json({exams});
     }
     catch(err){
         if(! err.statusCode){
