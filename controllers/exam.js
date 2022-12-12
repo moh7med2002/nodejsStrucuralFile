@@ -158,7 +158,7 @@ module.exports.getAllowedExamsForStudent = async (req,res,next) =>{
     try{
         const student = await Student.findOne({where : {id : 1}});
         const courses = await student.getCourses();
-        const units = await courses.getUnites();
+        const units = await courses.getUnits();
         const exams = await units.getExams();
         res.status(200).json({exams});
     }
