@@ -185,8 +185,7 @@ module.exports.getExamGradeForTeacher = async (req,res,next) =>{
     try{
         const grades = await Grade.findAll(
             {where:{ExamId:examId},
-            include : {model: Exam},
-            include : {model : Student}
+            include : {all: true},
         });
         res.status(200).json({grades});
     }
