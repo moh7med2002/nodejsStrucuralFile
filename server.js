@@ -143,7 +143,8 @@ Section.belongsTo(Class);
 
 
 // grade
-Grade.belongsTo(Exam); 
+Grade.belongsTo(Exam);
+Grade.belongsTo(Student); 
 
 // Wallet
 Wallet.belongsTo(Student);
