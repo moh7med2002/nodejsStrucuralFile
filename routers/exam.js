@@ -24,6 +24,8 @@ router.get('/student/allowed'  , studentAuth  , examController.getAllowedExamsFo
 
 router.get('/student/:ExamId' , studentAuth ,examController.getExamForStudent);
 
+router.get('/teacher/grades/:examId' , teacherAuth , examController.getExamGradeForTeacher);
+
 router.get('/:ExamId',examController.getExam);
 
 

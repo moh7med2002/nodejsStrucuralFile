@@ -179,3 +179,22 @@ module.exports.getAllowedExamsForStudent = async (req,res,next) =>{
         next(err);
     }
 }
+
+module.exports.getExamGradeForTeacher = async (req,res,next) =>{
+    const {examId} = req.params;
+    try{
+        const grades = await Grade.find(
+            {where:{ExamId:examId},
+            include : {model: Exam},
+            include : {model : Student}
+        });
+        res.status(200).json({grades});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+
+}
