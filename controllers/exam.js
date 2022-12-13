@@ -183,7 +183,7 @@ module.exports.getAllowedExamsForStudent = async (req,res,next) =>{
 module.exports.getExamGradeForTeacher = async (req,res,next) =>{
     const {examId} = req.params;
     try{
-        const grades = await Grade.find(
+        const grades = await Grade.findAll(
             {where:{ExamId:examId},
             include : {model: Exam},
             include : {model : Student}
