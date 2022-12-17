@@ -90,3 +90,50 @@ module.exports.getStudent = async (req,res,next) => {
         next(err);
     }
 }
+
+module.exports.updateStudentInfo = async (req,res,next) =>{
+    try{
+        const {id,name , email} = req.body
+        const student = await Student.findOne({where:{id:id}})
+        if(!student)
+        {
+            const error = new Error('الطالب غير موجود')
+            error.statusCode = 404
+            throw error
+        }
+        student.name = name
+        student.email = email
+        await student.save()
+        res.status(201).json({message:"تم تعديل بيانات الطالب"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+
+module.exports.updateStudentPassword = async (req,res,next) => {
+    try{
+        const {id,password} = req.body
+        const student = await Student.findOne({where:{id:id}})
+        if(!student)
+        {
+            const error = new Error('الطالب غير موجود')
+            error.statusCode = 404
+            throw error
+        }
+        const hashPass = await bcrypt.hash(password,12)
+        student.password = hashPass
+        await student.save()
+        res.status(201).json({message:"تم تعديل كلمة المرور"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}

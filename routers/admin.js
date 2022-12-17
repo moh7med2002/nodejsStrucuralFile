@@ -12,4 +12,9 @@ router.get('/students/all' , adminAuth , adminControllers.getAllStudents);
 
 router.get('/students/:studentId' , adminAuth , adminControllers.getStudent);
 
+router.put('/student/password' , adminAuth , adminControllers.updateStudentPassword);
+
+router.put('/student/info' , adminAuth , adminControllers.updateStudentInfo);
+
+
 module.exports = router;
