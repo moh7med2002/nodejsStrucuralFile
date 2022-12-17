@@ -80,7 +80,7 @@ module.exports.getAllStudents = async (req,res,next) =>{
 module.exports.getStudent = async (req,res,next) => {
     const {studentId} = req.params;
     try{
-        const student = await Student.findOne({where : {id : studentId}});
+        const student = await Student.findOne({where : {id : studentId}, include:{all:true}});
         res.status(200).json({student});
     }
     catch(err){
