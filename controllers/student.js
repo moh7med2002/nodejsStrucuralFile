@@ -170,3 +170,17 @@ module.exports.getRegistredCourses = async (req,res,next) => {
         next(err);
     }
 }
+
+module.exports.getUser = async (req,res,next) => {
+    const {studentId} = req.params;
+    try{
+        const student = await Student.findOne({where : {id : studentId}});
+        res.status(200).json({student});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}

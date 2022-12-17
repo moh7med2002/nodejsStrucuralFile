@@ -10,4 +10,6 @@ router.post('/login' , adminControllers.loginAdmin);
 
 router.get('/students/all' , adminAuth , adminControllers.getAllStudents);
 
+router.get('/students/:studentId' , adminAuth , adminControllers.getStudent);
+
 module.exports = router;

@@ -15,4 +15,7 @@ router.post('/course/register/:courseId' , studentAuth , studentController.regis
 
 router.get('/my-coures' , studentAuth ,studentController.getRegistredCourses);
 
+
+router.get('/:studentId' , studentAuth , studentController.getUser);
+
 module.exports = router;
