@@ -29,7 +29,7 @@ router.get('/teacher/grades/:examId' , teacherAuth , examController.getExamGrade
 router.get('/:ExamId',examController.getExam);
 
 
-router.put('/question/update/questionId' ,  adminAuth ,examController.updateQuestion)
+router.put('/question/update/:questionId' ,  adminAuth ,examController.updateQuestion)
 
 router.put('/teacher/:examId' , teacherAuth ,examController.updateExam);
 router.put('/:examId' , adminAuth ,examController.updateExam);
