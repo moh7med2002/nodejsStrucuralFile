@@ -54,8 +54,12 @@ module.exports.createQuestion = async(req,res,next)=>{
 }
 
 module.exports.updateQuestion = async (req,res,next) =>{
-    const {answer1Id, answer1 , answer2Id ,answer2 , answer3Id ,answer3 , answer4Id ,answer4 , rightAnswer} = req.body;
+    const {questionId} = req.params;
+    const {question ,answer1Id, answer1 , answer2Id ,answer2 , answer3Id ,answer3 , answer4Id ,answer4 , rightAnswer} = req.body;
     try{
+        const foundQuestion = await Question.findOne({where:{id:questionId}});
+        foundQuestion.title = question;
+        await foundQuestion.save();
         if(answer1){
             const isRight = +rightAnswer === 1;
             const answerOne = await Answer.findOne({where: {id : answer1Id}});
