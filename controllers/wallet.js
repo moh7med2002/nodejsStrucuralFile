@@ -17,7 +17,7 @@ exports.addMoneyForWallet = async(req,res,next)=>
         }
         const wallet = await Wallet.create({StudentId:studentId,money:+money,image:req.file.filename})
         await wallet.save()
-        res.status(201).json({messgae:"تم اضافة المبلغ للقبول أو الرفض"})
+        res.status(201).json({messgae:"تم اضافة المبلغ للإدارة للقبول أو الرفض"})
     }
     catch(err)
     {

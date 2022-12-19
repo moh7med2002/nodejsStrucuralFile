@@ -28,19 +28,19 @@ module.exports.createQuestion = async(req,res,next)=>{
     try{
         const newQuestion = await Question.create({title:question ,ExamId:examId});
         if(answer1){
-            const isRight = answer1 === rightAnswer;
+            const isRight = +rightAnswer === 1;
             const answerOne = await Answer.create({title:answer1, QuestionId:newQuestion.id , isRight});
         }
         if(answer2){
-            const isRight = answer2 === rightAnswer;
+            const isRight = +rightAnswer === 2;
             const answerTwo = await Answer.create({title:answer2, QuestionId:newQuestion.id , isRight});
         }
         if(answer3){
-            const isRight = answer3 === rightAnswer;
+            const isRight = +rightAnswer === 3;
             const answerThree = await Answer.create({title:answer3, QuestionId:newQuestion.id , isRight});
         }
         if(answer4){
-            const isRight = answer4 === rightAnswer;
+            const isRight = +rightAnswer === 4;
             const answerFour = await Answer.create({title:answer4, QuestionId:newQuestion.id , isRight});
         }
         res.status(201).json({message:"تم انشاء السؤال"})
