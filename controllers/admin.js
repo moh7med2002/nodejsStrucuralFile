@@ -101,6 +101,12 @@ module.exports.updateStudentInfo = async (req,res,next) =>{
             error.statusCode = 404
             throw error
         }
+        const studentWithEmail = await Student.findOne({where:{email:email}});
+        if( studentWithEmail && studentWithEmail.id !== id){
+            const error = new Error('الإيميل مستخدم');
+            error.statusCode = 402;
+            throw error;
+        }
         student.name = name
         student.email = email
         await student.save()
