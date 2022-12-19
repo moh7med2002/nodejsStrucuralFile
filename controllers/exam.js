@@ -61,32 +61,56 @@ module.exports.updateQuestion = async (req,res,next) =>{
         foundQuestion.title = question;
         await foundQuestion.save();
         if(answer1){
-            const isRight = +rightAnswer === 1;
-            const answerOne = await Answer.findOne({where: {id : answer1Id}});
-            answerOne.title = answer1;
-            answerOne.isRight = isRight;
-            await answerOne.save();
+            if(answer1Id){
+                const isRight = +rightAnswer === 1;
+                const answerOne = await Answer.findOne({where: {id : answer1Id}});
+                answerOne.title = answer1;
+                answerOne.isRight = isRight;
+                await answerOne.save();
+            }
+            else{
+                const isRight = +rightAnswer === 1;
+                const answerOne = await Answer.create({title:answer3, QuestionId:questionId , isRight});
+            }
         }
         if(answer2){
-            const isRight = +rightAnswer === 2;
-            const answerTwo = await Answer.findOne({where: {id : answer2Id}});
-            answerTwo.title = answer2;
-            answerTwo.isRight = isRight;
-            await answerTwo.save();
+            if(answer2Id){
+                const isRight = +rightAnswer === 2;
+                const answerTwo = await Answer.findOne({where: {id : answer2Id}});
+                answerTwo.title = answer2;
+                answerTwo.isRight = isRight;
+                await answerTwo.save();
+            }
+            else{
+                const isRight = +rightAnswer === 2;
+                const answerTwo = await Answer.create({title:answer3, QuestionId:questionId , isRight});
+            }
         }
         if(answer3){
-            const isRight = +rightAnswer === 3;
-            const answerThree = await Answer.findOne({where: {id : answer3Id}});
-            answerThree.title = answer3;
-            answerThree.isRight = isRight;
-            await answerThree.save();
+            if(answer3Id){
+                const isRight = +rightAnswer === 3;
+                const answerThree = await Answer.findOne({where: {id : answer3Id}});
+                answerThree.title = answer3;
+                answerThree.isRight = isRight;
+                await answerThree.save();
+            }
+            else{
+                const isRight = +rightAnswer === 3;
+                const answerThree = await Answer.create({title:answer3, QuestionId:questionId , isRight});
+            }
         }
         if(answer4){
-            const isRight = +rightAnswer === 4;
-            const answerFour = await Answer.findOne({where: {id : answer4Id}});
-            answerFour.title = answer4;
-            answerFour.isRight = isRight;
-            await answerFour.save();
+            if(answer4Id){
+                const isRight = +rightAnswer === 4;
+                const answerFour = await Answer.findOne({where: {id : answer4Id}});
+                answerFour.title = answer4;
+                answerFour.isRight = isRight;
+                await answerFour.save();
+            }
+            else{
+                const isRight = +rightAnswer === 4;
+            const answerFour = await Answer.create({title:answer4, QuestionId:questionId , isRight});
+            }
         }
         res.status(201).json({message:"تم تعديل السؤال"})
     }
