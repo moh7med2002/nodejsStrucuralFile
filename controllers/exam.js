@@ -53,6 +53,47 @@ module.exports.createQuestion = async(req,res,next)=>{
     }
 }
 
+module.exports.updateQuestion = async (req,res,next) =>{
+    const {answer1Id, answer1 , answer2Id ,answer2 , answer3Id ,answer3 , answer4Id ,answer4 , rightAnswer} = req.body;
+    try{
+        if(answer1){
+            const isRight = +rightAnswer === 1;
+            const answerOne = await Answer.findOne({where: {id : answer1Id}});
+            answerOne.title = answer1;
+            answerOne.isRight = isRight;
+            await answerOne.save();
+        }
+        if(answer2){
+            const isRight = +rightAnswer === 2;
+            const answerTwo = await Answer.findOne({where: {id : answer2Id}});
+            answerTwo.title = answer2;
+            answerTwo.isRight = isRight;
+            await answerTwo.save();
+        }
+        if(answer3){
+            const isRight = +rightAnswer === 3;
+            const answerThree = await Answer.findOne({where: {id : answer3Id}});
+            answerThree.title = answer3;
+            answerThree.isRight = isRight;
+            await answerThree.save();
+        }
+        if(answer4){
+            const isRight = +rightAnswer === 4;
+            const answerFour = await Answer.findOne({where: {id : answer4Id}});
+            answerFour.title = answer4;
+            answerFour.isRight = isRight;
+            await answerFour.save();
+        }
+        res.status(201).json({message:"تم تعديل السؤال"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
 module.exports.updateExam = async (req,res,next) => {
     const {examId} = req.params;
     const {title,duration , questionsNumber} = req.body;
