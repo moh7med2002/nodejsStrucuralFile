@@ -204,7 +204,7 @@ module.exports.updateStudentImage = async (req,res,next) =>{
         }
         student.image = req.file.filename;
         await student.save();
-        res.status(201).json({message:"تم تعديل صورة بنجاح"})
+        res.status(201).json({message:"تم تعديل صورة بنجاح", student:student})
     }
     catch(err){
         if(! err.statusCode){
