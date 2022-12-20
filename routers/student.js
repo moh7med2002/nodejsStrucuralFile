@@ -15,6 +15,8 @@ router.post('/course/register/:courseId' , studentAuth , studentController.regis
 
 router.get('/my-coures' , studentAuth ,studentController.getRegistredCourses);
 
+router.put('/update/image' , studentAuth , studentController.updateStudentImage);
+
 
 router.get('/:studentId' , studentAuth , studentController.getUser);
 

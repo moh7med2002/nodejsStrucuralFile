@@ -28,6 +28,10 @@ const Student = Seqalize.define('Student' , {
         type:DataTypes.INTEGER,
         default: 0
     },
+    imgae:{
+        type :DataTypes.STRING,
+        default :""
+    }
 });
 
 module.exports = Student;

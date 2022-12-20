@@ -4,6 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Grade = require('../models/Grade');
 const Exam = require('../models/Exam');
+const fs = require('fs');
+const path = require('path');
+
+
 
 module.exports.registerStudent = async(req,res,next)=>
 {
@@ -183,4 +187,36 @@ module.exports.getUser = async (req,res,next) => {
         }
         next(err);
     }
+}
+
+
+module.exports.updateStudentImage = async (req,res,next) =>{
+    const studentId = req.studentId;
+    try{
+        if(!req.file){
+            const error = new Error('الصورة غير موجودة');
+            error.statusCode = 401;
+            throw error;
+        }
+        const student = await Student.findOne({where:{id  : studentId}});
+        if(student.image){
+            clearImage(student.image);
+        }
+        student.image = req.file.filename;
+        await student.save();
+        res.status(201).json({message:"تم تعديل صورة بنجاح"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+const clearImage=(filePath)=>{
+    filePath=path.join(__dirname,'..',`images/${filePath}`);
+    fs.unlink(filePath,(err)=>{
+        console.log(err);
+    })
 }
