@@ -28,7 +28,7 @@ const Student = Seqalize.define('Student' , {
         type:DataTypes.INTEGER,
         default: 0
     },
-    imgae:{
+    image:{
         type :DataTypes.STRING,
         default :""
     }
