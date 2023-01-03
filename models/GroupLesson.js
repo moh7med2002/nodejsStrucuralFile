@@ -1,7 +1,7 @@
 const {DataTypes} = require('sequelize')
 const Seqalize = require('../util/database');
 
-const Group = Seqalize.define('Groupe' , {
+const GroupLesson = Seqalize.define('GroupLesson' , {
     id:{
         type:DataTypes.INTEGER,
         autoIncrement:true,
@@ -12,30 +12,26 @@ const Group = Seqalize.define('Groupe' , {
         type:DataTypes.STRING,
         required: true
     },
-    image:{
+    meetLink:{
         type:DataTypes.STRING,
         required: true
     },
-    price:{
-        type:DataTypes.DOUBLE,
-        required: true
-    },
-    goals:{
-        type:DataTypes.TEXT,
-        required: true
-    },
-    description:{
-        type:DataTypes.TEXT,
-        required: true
-    },
-    allowedStudents:{
-        type : DataTypes.INTEGER,
+    day:{
+        type : DataTypes.DATE,
         required : true
     },
-    registerStudents:{
+    startTime:{
+        type : DataTypes.TIME,
+        required : true
+    },
+    EndTime:{
+        type : DataTypes.TIME,
+        required : true
+    },
+    status:{
         type : DataTypes.INTEGER,
         default : 0
     }
 });
 
-module.exports = Group;
+module.exports = GroupLesson;

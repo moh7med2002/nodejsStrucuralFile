@@ -62,6 +62,8 @@ const Grade = require('./models/Grade');
 const Teacher = require('./models/Teacher');
 const Section = require('./models/Section');
 const Wallet = require('./models/Wallet')
+const Group = require('./models/Group');
+const GroupLesson = require('./models/GroupLesson');
 
 
 //  parent
@@ -73,12 +75,14 @@ Student.belongsTo(Level);
 Student.belongsTo(Class);
 Student.belongsTo(Section);
 Student.belongsToMany(Course, { through: "Student_Course"});
+Student.belongsToMany(Group, { through: "Student_Group"});
 Student.belongsToMany(Forum, { through: "Student_Forum", onDelete:"CASCADE"});
 Student.hasMany(Grade , {onDelete:"CASCADE" });
 Student.hasMany(Wallet , {onDelete:"CASCADE" });
 
 //  Teacher
 Teacher.hasMany(Course , {onDelete:"SET NULL"});
+Teacher.hasMany(Group , {onDelete:"SET NULL"});
 Teacher.hasMany(Forum , {onDelete:"SET NULL"});
 
 // Course
@@ -89,6 +93,20 @@ Course.belongsTo(Level);
 Course.belongsTo(Class);
 Course.belongsTo(Section);
 Course.hasMany(Unit ,{onDelete:"CASCADE"});
+
+// Group
+Group.belongsTo(Teacher);
+Group.belongsToMany(Student, { through: "Student_Group"});
+Group.belongsTo(Subject);
+Group.belongsTo(Level);
+Group.belongsTo(Class);
+Group.belongsTo(Section);
+Group.hasMany(GroupLesson , {onDelete:"CASCADE"});
+
+
+//  Group Lesson
+GroupLesson.belongsTo(Group)
+
 
 // Unit
 Unit.hasMany(Lesson , {onDelete:"CASCADE"});
@@ -189,6 +207,11 @@ app.use('/api/admin' , adminRouter);
 const walletRouter = require('./routers/wallet');
 app.use('/api/wallet' , walletRouter);
 
+
+const groupRouter = require('./routers/group');
+app.use('/api/group' , groupRouter);
+
+
 app.use((error,req,res,next)=>{
     console.log(error);
     const status=error.statusCode||500;
@@ -201,7 +224,7 @@ const port = process.env.PORT || 9000;
 console.log(port);
 const seqalize = require('./util/database');
 seqalize
-.sync()
+.sync({alter:true})
 .then(result=>{
     console.log('conntect');
     app.listen(port);
