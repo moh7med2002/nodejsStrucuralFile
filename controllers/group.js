@@ -35,6 +35,35 @@ exports.createGroup = async(req,res,next)=>
 }
 
 
+module.exports.updateGroup = async (req,res,next) => {
+    const {groupId} = req.params;
+    try{
+        const {title , allowedStudents , TeacherId , price , goals , description} = req.body;
+        const group = await Group.findOne({where:{id:groupId}});
+        if(!group){
+            const error = new Error('المجموعة غير موجودة');
+            error.statusCode = 409;
+            throw error;
+        }
+        group.title = title;
+        group.allowedStudents = + allowedStudents;
+        group.TeacherId = TeacherId;
+        group.price = + price;
+        group.description = description;
+        group.goals = goals;
+        await group.save();
+        res.status(201).json({message:"تم تعديل المجموعة بنجاح"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+
+
 module.exports.getAllGroupe = async (req,res,next)=>{
     try{
         const groupes = await Group.findAll({include:{all:true}});

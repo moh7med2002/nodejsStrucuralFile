@@ -11,6 +11,10 @@ router.post('/teacher/create' , teacherAuth , groupControllers.createGroup);
 router.post('/create' , adminAuth , groupControllers.createGroup);
 
 
+router.put('/teacher/update/:groupId' , teacherAuth , groupControllers.updateGroup);
+router.put('/update/:groupId' , adminAuth , groupControllers.updateGroup);
+
+
 router.get('/one/:groupId' , groupControllers.getGroupeById)
 router.get('/all' , groupControllers.getAllGroupe)
 
