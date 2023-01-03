@@ -1,7 +1,31 @@
 const Group = require('../models/Group');
 const GroupLesson = require('../models/GroupLesson');
 const Subject = require('../models/Subject');
+const Student = require('../models/Student')
 
+
+
+module.exports.getGroupsForStudent = async (req,res,next) => {
+    const studentId = req.studentId;
+    try{
+        const student = await Student({where:{id:studentId}});
+        if(!student){
+            const error = new Error('يرجى تسجيل الدخول');
+            error.statusCode = 422;
+            throw error;
+        }
+        const groups = await Group.findAll({
+            where:{LevelId:student.LevelId, ClassId:student.ClassId , SectionId : student.SectionId},include:{all:true}
+        });
+        res.status(200).json({groups});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
 
 exports.createGroup = async(req,res,next)=>
 {
@@ -94,7 +118,7 @@ module.exports.getGroupeById = async (req,res,next)=>{
 module.exports.getAllLesson = async (req,res,next) => {
     const { groupId} = req.params;
     try{
-        const lessons = await GroupLesson.findAll({where:{GroupId:groupId}})
+        const lessons = await GroupLesson.findAll({where:{GroupeId:groupId}})
         res.status(200).json({lessons:lessons});
     }
     catch(err){
@@ -109,7 +133,7 @@ module.exports.createGroupLesson = async (req,res,next) => {
     const {title, day , meetLink , startTime , EndTime , GroupId} = req.body;
     try{
         const lesson = new GroupLesson({
-            title , day , meetLink , startTime , EndTime , GroupId , status:0
+            title , day , meetLink , startTime , EndTime , GroupeId:GroupId , status:0
         });
         await lesson.save();
         res.status(200).json({message:"تم انشاء الدرس"});

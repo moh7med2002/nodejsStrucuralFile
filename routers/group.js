@@ -4,7 +4,8 @@ const router = express.Router();
 const groupControllers = require('../controllers/group');
 
 const adminAuth = require('../middelware/AdminAuth');
-const teacherAuth = require('../middelware/TeacherAuth')
+const teacherAuth = require('../middelware/TeacherAuth');
+const studentAuth = require('../middelware/StudentAuth')
 
 
 router.post('/teacher/create' , teacherAuth , groupControllers.createGroup);
@@ -24,5 +25,6 @@ router.put('/teacher/lesson/update/:lessonId' , teacherAuth , groupControllers.u
 router.get('/one/:groupId' , groupControllers.getGroupeById)
 router.get('/all' , groupControllers.getAllGroupe)
 router.get('/lessons/:groupId' , groupControllers.getAllLesson);
+router.get('/forStudent' , studentAuth ,groupControllers.getGroupsForStudent);
 
 module.exports = router;
