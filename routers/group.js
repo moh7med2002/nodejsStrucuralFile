@@ -11,7 +11,9 @@ const studentAuth = require('../middelware/StudentAuth')
 router.post('/teacher/create' , teacherAuth , groupControllers.createGroup);
 router.post('/create' , adminAuth , groupControllers.createGroup);
 router.post('/lesson/create' , adminAuth , groupControllers.createGroupLesson)
-router.post('/teacher/lesson/create' , teacherAuth , groupControllers.createGroupLesson)
+router.post('/teacher/lesson/create' , teacherAuth , groupControllers.createGroupLesson);
+
+router.post('/register/:groupId' , studentAuth  , groupControllers.registerGroup);
 
 
 

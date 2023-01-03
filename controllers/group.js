@@ -166,3 +166,36 @@ module.exports.updateeGroupLesson = async (req,res,next) => {
         next(err);
     }
 }
+
+
+module.exports.registerGroup = async (req,res,next) =>{
+    const studentId = req.studentId;
+    const {groupId} = req.params;
+    try{
+        const group = await Group.findOne({where: {id : groupId}});
+        const student = await Student.findOne({where : {id : studentId}});
+        const registerd_students = group.registerStudents || 0;
+        if(group.allowedStudents <= registerd_students){
+            const error = new Error('فشل الإشتراك . العدد مكتمل');
+            error.statusCode = 422;
+            throw error;
+        }
+        if(group.price > student.money){
+            const error = new Error('المبلغ غير كافي');
+            error.statusCode = 422;
+            throw error;
+        }
+        await group.addStudent(student);
+        student.money -= group.price;
+        group.registerStudents += 1;
+        await group.save();
+        await student.save(); 
+        res.status(201).json({message:"تم الإشتراك في المجموعة بنجاح"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
