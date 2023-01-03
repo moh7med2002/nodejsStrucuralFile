@@ -208,7 +208,6 @@ module.exports.getStudentRegisterGroups = async (req,res,next) => {
         const student = await Student.findOne({where : {id : studentId} , 
             include: [{
                 model: Group,
-                as: 'Groups',
                 include:[{
                     model : Teacher
                 }]
