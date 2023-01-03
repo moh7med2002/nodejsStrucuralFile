@@ -47,3 +47,17 @@ module.exports.getAllGroupe = async (req,res,next)=>{
         next(err);
     }
 }
+
+module.exports.getGroupeById = async (req,res,next)=>{
+    const {groupId} = req.params;
+    try{
+        const groupe = await Group.findOne({ where:{id :groupId} ,include:{all:true}});
+        res.status(200).json({groupe:groupe});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
