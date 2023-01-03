@@ -225,3 +225,17 @@ module.exports.getStudentRegisterGroups = async (req,res,next) => {
         next(err);
     }
 }
+
+module.exports.getGroupsForTeacher = async (req,res,next) => {
+    const teacherId = req.teacherId;
+    try{
+        const groups = await Group.findAll({where:{TeacherId:teacherId}, include:{all:true}});
+        res.status(200).json({groups});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}

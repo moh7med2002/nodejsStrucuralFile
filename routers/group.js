@@ -29,5 +29,6 @@ router.get('/all' , groupControllers.getAllGroupe)
 router.get('/lessons/:groupId' , groupControllers.getAllLesson);
 router.get('/forStudent' , studentAuth ,groupControllers.getGroupsForStudent);
 router.get('/student/registred' , studentAuth ,groupControllers.getStudentRegisterGroups);
+router.get('/teacher' , teacherAuth , groupControllers.getGroupsForTeacher);
 
 module.exports = router;
