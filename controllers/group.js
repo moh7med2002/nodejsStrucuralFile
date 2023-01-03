@@ -90,3 +90,55 @@ module.exports.getGroupeById = async (req,res,next)=>{
         next(err);
     }
 }
+
+module.exports.getAllLesson = async (req,res,next) => {
+    const { groupId} = req.params;
+    try{
+        const lessons = await GroupLesson.findAll({where:{GroupId:groupId}})
+        res.status(200).json({lessons:lessons});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.createGroupLesson = async (req,res,next) => {
+    const {title, day , meetLink , startTime , EndTime , GroupId} = req.body;
+    try{
+        const lesson = new GroupLesson({
+            title , day , meetLink , startTime , EndTime , GroupId , status:0
+        });
+        await lesson.save();
+        res.status(200).json({message:"تم انشاء الدرس"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.updateeGroupLesson = async (req,res,next) => {
+    const {lessonId}  = req.params;
+    const {title, day , meetLink , startTime , EndTime} = req.body;
+    try{
+        const lesson = await GroupLesson.findOne({where:{id:lessonId}});
+        lesson.title = title;
+        lesson.day = day;
+        lesson.meetLink = meetLink;
+        lesson.startTime =startTime;
+        lesson.EndTime = EndTime;
+        await lesson.save();
+        res.status(201).json({message:"تم تعديل الدرس بنجاح"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
