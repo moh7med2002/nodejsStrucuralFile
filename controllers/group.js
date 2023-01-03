@@ -209,7 +209,10 @@ module.exports.getStudentRegisterGroups = async (req,res,next) => {
             include: [{
                 model: Group,
                 include:[{
-                    model : Teacher
+                    model : Teacher,
+                    attributes: {
+                        exclude: ['password']
+                      }
                 }]
               }]
         });
