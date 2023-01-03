@@ -213,7 +213,7 @@ module.exports.getStudentRegisterGroups = async (req,res,next) => {
                 }]
               }]
         });
-        res.status(200).json({student});
+        res.status(200).json({groups: student.Groupes});
     }
     catch(err){
         if(! err.statusCode){
