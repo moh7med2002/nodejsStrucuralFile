@@ -8,7 +8,7 @@ const Student = require('../models/Student')
 module.exports.getGroupsForStudent = async (req,res,next) => {
     const studentId = req.studentId;
     try{
-        const student = await Student({where:{id:studentId}});
+        const student = await Student.findOne({where:{id:studentId}});
         if(!student){
             const error = new Error('يرجى تسجيل الدخول');
             error.statusCode = 422;
