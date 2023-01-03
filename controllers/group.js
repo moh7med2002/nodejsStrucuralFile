@@ -33,3 +33,17 @@ exports.createGroup = async(req,res,next)=>
         next(err);
     }
 }
+
+
+module.exports.getAllGroupe = async (req,res,next)=>{
+    try{
+        const groupes = await Group.findAll({include:{all:true}});
+        res.status(200).json({groupes:groupes});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}

@@ -10,4 +10,7 @@ const teacherAuth = require('../middelware/TeacherAuth')
 router.post('/teacher/create' , teacherAuth , groupControllers.createGroup);
 router.post('/create' , adminAuth , groupControllers.createGroup);
 
+
+router.get('/all' , groupControllers.getAllGroupe)
+
 module.exports = router;
