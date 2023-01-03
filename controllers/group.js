@@ -1,7 +1,8 @@
 const Group = require('../models/Group');
 const GroupLesson = require('../models/GroupLesson');
 const Subject = require('../models/Subject');
-const Student = require('../models/Student')
+const Student = require('../models/Student');
+const Teacher = require('../models/Teacher')
 
 
 
@@ -204,9 +205,16 @@ module.exports.registerGroup = async (req,res,next) =>{
 module.exports.getStudentRegisterGroups = async (req,res,next) => {
     const studentId = req.studentId; 
     try{
-        const student = await Student.findOne({where : {id : studentId}});
-        const groups = await student.getGroupes();
-        res.status(200).json({groups});
+        const student = await Student.findOne({where : {id : studentId} , 
+            include: [{
+                model: Group,
+                as: 'Groups',
+                include:[{
+                    model : Teacher
+                }]
+              }]
+        });
+        res.status(200).json({student});
     }
     catch(err){
         if(! err.statusCode){
