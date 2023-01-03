@@ -199,3 +199,19 @@ module.exports.registerGroup = async (req,res,next) =>{
         next(err);
     }
 }
+
+
+module.exports.getStudentRegisterGroups = async (req,res,next) => {
+    const studentId = req.studentId; 
+    try{
+        const student = await Student.findOne({where : {id : studentId}});
+        const groups = await student.getGroupes();
+        res.status(200).json({groups});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
