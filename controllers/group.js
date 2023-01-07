@@ -119,8 +119,8 @@ module.exports.getGroupeById = async (req,res,next)=>{
 module.exports.getAllLesson = async (req,res,next) => {
     const { groupId} = req.params;
     try{
-        const lessons = await GroupLesson.findAll({where:{GroupeId:groupId}})
-        res.status(200).json({lessons:lessons});
+        const lessons = await GroupLesson.findAll({where:{GroupeId:groupId}});
+        res.status(200).json({lessons:lessons ,});
     }
     catch(err){
         if(! err.statusCode){

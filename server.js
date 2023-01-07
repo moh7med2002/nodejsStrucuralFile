@@ -105,7 +105,7 @@ Group.hasMany(GroupLesson , {onDelete:"CASCADE"});
 
 
 //  Group Lesson
-GroupLesson.belongsTo(Group)
+GroupLesson.belongsTo(Group);
 
 
 // Unit
