@@ -1,9 +1,16 @@
 const Lesson = require('../models/Lesson')
-exports.createLessonByAdmin = async(req,res,next)=>
+exports.createLesson = async(req,res,next)=>
 {
     try{
         const {title,UnitId, videoUrl , content} = req.body
-        const lesson = new Lesson(req.body)
+        let status ;
+        if(req.teacherId){
+            status = 0;
+        }
+        else if (req.adminId){
+            status = 1;
+        }
+        const lesson = new Lesson({...req.body , status:status})
         await lesson.save()
         res.status(201).json('تم انشاء الدرس')
     }
@@ -16,22 +23,7 @@ exports.createLessonByAdmin = async(req,res,next)=>
 };
 
 
-exports.createLessonByTeacher = async(req,res,next) =>{
-    try{
-        const {title,UnitId, videoUrl , content} = req.body
-        const lesson = new Lesson(req.body)
-        await lesson.save()
-        res.status(201).json('تم انشاء الدرس')
-    }
-    catch(err){
-        if(! err.statusCode){
-            err.statusCode=500;
-        }
-        next(err);
-    }
-}
-
-module.exports.updateLessonByAdmin = async (req,res,next)=>{
+module.exports.updateLesson = async (req,res,next)=>{
     const {lessonId} = req.params;
     const {title , videoUrl , content} = req.body;
     try{
@@ -75,6 +67,27 @@ module.exports.deleteLesson = async (req,res,next)=>{
     }
 }
 
+
+module.exports.acceptLessonByAdmin = async(req,res,next) => {
+    const {lessonId} = req.params;
+    try{
+        const lesson = await Lesson.findOne({where:{id:lessonId}});
+        if(!lesson){
+            const error = new Error('الدرس غير موجود')
+            error.statusCode = 404
+            throw error;
+        }
+        lesson.status = 1;
+        await lesson.save();
+        res.status(201).json({message:"تم قبول الدرس بنجاح"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
 
 
 module.exports.getUnitLesson = async(req,res,next)=>{

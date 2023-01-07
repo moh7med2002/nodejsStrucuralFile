@@ -19,6 +19,11 @@ const Lesson = Seqalize.define('Lesson' , {
     videoUrl:{
         type:DataTypes.STRING,
         required: true
+    },
+    status:{
+        type : DataTypes.INTEGER,
+        required : true,
+        defaultValue:0
     }
 });
 

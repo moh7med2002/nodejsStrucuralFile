@@ -6,11 +6,13 @@ const adminAuth = require('../middelware/AdminAuth');
 const studentAuth = require('../middelware/StudentAuth');
 const teacherAuth = require('../middelware/TeacherAuth')
 
-router.post('/create', adminAuth ,lessonController.createLessonByAdmin);
-router.post('/teacher/create', teacherAuth ,lessonController.createLessonByAdmin);
+router.post('/create', adminAuth ,lessonController.createLesson);
+router.post('/teacher/create', teacherAuth ,lessonController.createLesson);
 
-router.put('/teacher/:lessonId' , teacherAuth ,lessonController.updateLessonByAdmin);
-router.put('/:lessonId' , adminAuth ,lessonController.updateLessonByAdmin);
+router.put('/teacher/:lessonId' , teacherAuth ,lessonController.updateLesson);
+
+router.put('/accept/:lessonId' , adminAuth , lessonController.updateLesson);
+router.put('/:lessonId' , adminAuth ,lessonController.updateLesson);
 
 
 router.delete('/teacher/:lessonId' , teacherAuth , lessonController.deleteLesson);

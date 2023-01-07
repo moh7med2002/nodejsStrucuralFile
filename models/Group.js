@@ -34,7 +34,7 @@ const Group = Seqalize.define('Groupe' , {
     },
     registerStudents:{
         type : DataTypes.INTEGER,
-        default : 0
+        defaultValue : 0
     }
 });
 
