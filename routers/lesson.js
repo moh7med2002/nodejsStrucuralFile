@@ -11,7 +11,7 @@ router.post('/teacher/create', teacherAuth ,lessonController.createLesson);
 
 router.put('/teacher/:lessonId' , teacherAuth ,lessonController.updateLesson);
 
-router.put('/accept/:lessonId' , adminAuth , lessonController.updateLesson);
+router.put('/accept/:lessonId' , adminAuth , lessonController.acceptLessonByAdmin);
 router.put('/:lessonId' , adminAuth ,lessonController.updateLesson);
 
 
