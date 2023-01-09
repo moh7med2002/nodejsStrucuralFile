@@ -23,8 +23,7 @@ exports.addComment = async(req,res,next)=>
 };
 
 module.exports.deleteComment = async (req,res,next)=>{
-    const {postId} = req.params;
-
+    const {commentId} = req.params;
     try{
         const comment = await Comment.findOne({where:{id:commentId}});
         if(!comment){

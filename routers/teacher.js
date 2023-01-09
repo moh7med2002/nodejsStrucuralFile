@@ -12,12 +12,12 @@ router.post('/login',teacherController.loginTeacher);
 router.get('/all',teacherController.getTeachers)
 router.get('/my-coures' , teacherAuth , teacherController.getTeacherCourses );
 router.get('/my-forums' , teacherAuth , teacherController.getTeacherForum );
-router.get('/posts',teacherAuth, postController.getAllPost);
+router.get('/posts/:forumId',teacherAuth, postController.getAllPost);
 router.get('/comments/:postId',teacherAuth, commentController.getAllComment);
-router.post('/post' , teacherAuth , postController.addPost );
+router.post('/post/:forumId' , teacherAuth , postController.addPost );
 router.delete('/post',teacherAuth, postController.deletePost);
 router.post('/comment/:postId' , teacherAuth , commentController.addComment );
-router.delete('/comment/:postId',teacherAuth, commentController.deleteComment);
+router.delete('/comment/:commentId',teacherAuth, commentController.deleteComment);
 
 
 

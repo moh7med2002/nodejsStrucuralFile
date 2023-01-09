@@ -21,14 +21,15 @@ router.put('/update/image' , studentAuth , studentController.updateStudentImage)
 
 
 router.get('/:studentId' , studentAuth , studentController.getUser);
+router.get('/posts/:forumId',studentAuth, postController.getAllPost);
+router.get('/comments/:postId',studentAuth, commentController.getAllComment);
 
-router.post('/post' , studentAuth , postController.addPost );
+router.post('/post/:forumId' , studentAuth , postController.addPost );
 router.delete('/post',studentAuth, postController.deletePost);
 
-router.post('/post' , studentAuth , commentController.addComment );
-router.delete('/post',studentAuth, commentController.deleteComment);
-router.get('/posts',studentAuth, postController.getAllPost);
-router.get('/comments',studentAuth, commentController.getAllComment);
+router.post('/comment/:postId' , studentAuth , commentController.addComment );
+router.delete('/comment/:commentId',studentAuth, commentController.deleteComment);
+
 
 
 module.exports = router;
