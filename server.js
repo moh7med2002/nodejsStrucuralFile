@@ -79,12 +79,13 @@ Student.belongsToMany(Group, { through: "Student_Group"});
 Student.belongsToMany(Forum, { through: "Student_Forum", onDelete:"CASCADE"});
 Student.hasMany(Grade , {onDelete:"CASCADE" });
 Student.hasMany(Wallet , {onDelete:"CASCADE" });
+Student.hasMany(Post)
 
 //  Teacher
 Teacher.hasMany(Course , {onDelete:"SET NULL"});
 Teacher.hasMany(Group , {onDelete:"SET NULL"});
 Teacher.hasMany(Forum , {onDelete:"SET NULL"});
-
+Teacher.hasMany(Post)
 // Course
 Course.belongsTo(Teacher);
 Course.belongsToMany(Student, { through: "Student_Course"});
@@ -137,6 +138,8 @@ Forum.hasMany(Post , {onDelete:"CASCADE"})
 // Post
 Post.belongsTo(Forum)
 Post.hasMany(Comment , {onDelete:"CASCADE"})
+Post.belongsTo(Teacher)
+Post.belongsTo(Student)
 
 // Comment
 Comment.belongsTo(Post)
@@ -210,6 +213,9 @@ app.use('/api/wallet' , walletRouter);
 
 const groupRouter = require('./routers/group');
 app.use('/api/group' , groupRouter);
+
+const forumRouter = require('./routers/Forum');
+app.use('/api/forum' , forumRouter);
 
 
 app.use((error,req,res,next)=>{
