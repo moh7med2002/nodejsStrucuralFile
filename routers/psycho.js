@@ -14,7 +14,7 @@ router.get('/all/teacher' , teacherAuth ,  psychoController.getAllPsychoForTeach
 
 router.get('/:psychoId' , psychoController.getPsychoById);
 
-router.delete('/:psychoId' , adminAuth ,psychoController.getPsychoById)
+router.delete('/:psychoId' , adminAuth ,psychoController.deletePsycho)
 router.put('/:psychoId' , adminAuth ,psychoController.updatePsycho)
 
 
