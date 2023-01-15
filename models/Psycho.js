@@ -21,7 +21,7 @@ const Post = Seqalize.define('Psycho' , {
         required: true
     },
     duration:{
-        type:DataTypes.NUMBER,
+        type:DataTypes.INTEGER,
         required: true
     },
     description:{
