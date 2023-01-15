@@ -1,15 +1,16 @@
 const Comment = require("../models/Comment");
-const { post } = require("../routers/lesson");
 
 exports.addComment = async(req,res,next)=>
 {
+    const {postId} = req.params;
+
     try{
         if(req.body.TeacherId){
-            const {content, TeacherId} = req.body
+            const {text, TeacherId} = req.body
         }else {
-            const {content, StudentId} = req.body
+            const {text, StudentId} = req.body
         }       
-        const comment = new Comment({...req.body })
+        const comment = new Comment({...req.body, PostId: postId })
         await comment.save()
         res.status(201).json('تم انشاء التعليق')
     }
@@ -20,9 +21,9 @@ exports.addComment = async(req,res,next)=>
         next(err);
     }
 };
+
 module.exports.deleteComment = async (req,res,next)=>{
-    const {commentId} = req.query;
-    console.log('comment', commentId);
+    const {commentId} = req.params;
     try{
         const comment = await Comment.findOne({where:{id:commentId}});
         if(!comment){
@@ -42,7 +43,7 @@ module.exports.deleteComment = async (req,res,next)=>{
 }
 
 module.exports.getAllComment = async (req,res,next) => {
-    const {postId} = req.query;
+    const {postId} = req.params;
     console.log('postId: ', postId);
     try{
         const comments = await Comment.findAll({
