@@ -222,6 +222,9 @@ app.use('/api/group' , groupRouter);
 const forumRouter = require('./routers/Forum');
 app.use('/api/forum' , forumRouter);
 
+const psychoRouter = require('./routers/psycho');
+app.use('/api/psycho' , psychoRouter);
+
 
 app.use((error,req,res,next)=>{
     console.log(error);
