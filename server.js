@@ -64,6 +64,7 @@ const Section = require('./models/Section');
 const Wallet = require('./models/Wallet')
 const Group = require('./models/Group');
 const GroupLesson = require('./models/GroupLesson');
+const Psycho = require('./models/Psycho');
 
 
 //  parent
@@ -85,6 +86,7 @@ Student.hasMany(Post)
 Teacher.hasMany(Course , {onDelete:"SET NULL"});
 Teacher.hasMany(Group , {onDelete:"SET NULL"});
 Teacher.hasMany(Forum , {onDelete:"SET NULL"});
+Teacher.hasMany(Psycho , {onDelete:"SET NULL"});
 Teacher.hasMany(Post)
 // Course
 Course.belongsTo(Teacher);
@@ -94,6 +96,9 @@ Course.belongsTo(Level);
 Course.belongsTo(Class);
 Course.belongsTo(Section);
 Course.hasMany(Unit ,{onDelete:"CASCADE"});
+
+// Psycho
+Psycho.belongsTo(Teacher);
 
 // Group
 Group.belongsTo(Teacher);
