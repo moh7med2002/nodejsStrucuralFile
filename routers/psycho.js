@@ -12,6 +12,11 @@ router.get('/all' , adminAuth , psychoController.getAllPsycho);
 
 router.get('/all/teacher' , teacherAuth ,  psychoController.getAllPsychoForTeacher);
 
-router.get('/:psychoId' , psychoController.getPsychoById)
+router.get('/:psychoId' , psychoController.getPsychoById);
+
+router.delete('/:psychoId' , adminAuth ,psychoController.getPsychoById)
+router.put('/:psychoId' , adminAuth ,psychoController.updatePsycho)
+
+
 
 module.exports = router;
