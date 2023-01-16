@@ -135,7 +135,7 @@ module.exports.registerPsycho = async (req,res,next) => {
 }
 
 module.exports.acceptPsycho = async (req,res,next) => {
-    const {requestPsycho , startTime} = req.body;
+    const {requestPsycho , startTime , startDate , meetLink} = req.body;
     try{
         const foundRegiseredPsycho = await PsychoStudent.findOne({where:{id:requestPsycho}});
         const student = await Student.findOne({where:{id:foundRegiseredPsycho.StudentId}});
@@ -149,6 +149,8 @@ module.exports.acceptPsycho = async (req,res,next) => {
         await student.save();
         foundRegiseredPsycho.status = 1;
         foundRegiseredPsycho.startTime = startTime;
+        foundRegiseredPsycho.startDate = startDate;
+        foundRegiseredPsycho.meetLink = meetLink;
         await foundRegiseredPsycho.save();
         res.status(201).json({message:"تم الموافقة على الجلسة بنجاح"})
     }

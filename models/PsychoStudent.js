@@ -15,6 +15,12 @@ const PsychoStudent = Seqalize.define('Psycho_Student' , {
     startTime:{
         type : DataTypes.TIME,
     },
+    startDate:{
+        type : DataTypes.DATE,
+    },
+    meetLink:{
+        type : DataTypes.STRING
+    },
     status:{
         type : DataTypes.INTEGER,
         defaultValue : 0
