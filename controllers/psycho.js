@@ -113,6 +113,10 @@ module.exports.registerPsycho = async (req,res,next) => {
     try{
         const student = await Student.findOne({where:{id:studentId}});
         const psycho = await Psycho.findOne({where:{id:psychoId}});
+        const foundRegiseredPsycho = await PsychoStudent.findOne({where:{StudentId:studentId , PsychoId:psychoId}});
+        if(foundRegiseredPsycho){
+            return res.status(401).json({isRegister:true ,message:"تم طلب هذه الجلسة مسبقا"})
+        }
         if(psycho.price > student.money){
             const error = new Error('المبلغ غير كافي');
             error.statusCode = 422;
@@ -120,7 +124,7 @@ module.exports.registerPsycho = async (req,res,next) => {
         }
         const regiseredPsycho = new PsychoStudent({description:description , StudentId:studentId , PsychoId:psychoId});
         await regiseredPsycho.save();
-        res.status(201).json({message:"تم طلب الجلسة بنجاح"})
+        res.status(201).json({message:"تم طلب الجلسة بنجاح" , isRegister:false})
     }
     catch(err){
         if(! err.statusCode){
