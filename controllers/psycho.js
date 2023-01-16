@@ -134,6 +134,76 @@ module.exports.registerPsycho = async (req,res,next) => {
     }
 }
 
+module.exports.acceptPsycho = async (req,res,next) => {
+    const {requestPsycho , startTime} = req.body;
+    try{
+        const foundRegiseredPsycho = await PsychoStudent.findOne({where:{id:requestPsycho}});
+        const student = await Student.findOne({where:{id:foundRegiseredPsycho.StudentId}});
+        const psycho = await Psycho.findOne({where:{id:foundRegiseredPsycho.PsychoId}});
+        if(psycho.price > student.money){
+            const error = new Error('المبلغ غير كافي');
+            error.statusCode = 422;
+            throw error;
+        }
+        student.money -= psycho.price;
+        await student.save();
+        foundRegiseredPsycho.status = 1;
+        foundRegiseredPsycho.startTime = startTime;
+        await foundRegiseredPsycho.save();
+        res.status(201).json({message:"تم الموافقة على الجلسة بنجاح"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+
+module.exports.getAcceptedPsycho = async (req,res,next) => {
+    const {psychoId} = req.body;
+    try{
+        const psychos = await PsychoStudent.findAll({where:{PsychoId:psychoId , status:1} , include:{all:true}})
+        res.status(200).json({psychos})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.getrequestededPsycho = async (req,res,next) => {
+    const {psychoId} = req.body;
+    try{
+        const psychos = await PsychoStudent.findAll({where:{PsychoId:psychoId , status:0} , include:{all:true}})
+        res.status(200).json({psychos})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.rejectPsycho = async (req,res,next) => {
+    const {requestPsycho} = req.body;
+    try{
+        const foundRegiseredPsycho = await PsychoStudent.findOne({where:{id:requestPsycho}});
+        await foundRegiseredPsycho.destroy();
+        res.status(201).json({message:"تم رفض على الجلسة بنجاح"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
 const clearImage=(filePath)=>{
     filePath=path.join(__dirname,'..',`images/${filePath}`);
     fs.unlink(filePath,(err)=>{
