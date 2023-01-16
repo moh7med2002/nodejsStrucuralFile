@@ -8,7 +8,7 @@ const teacherAuth = require('../middelware/TeacherAuth');
 
 router.post('/create' , adminAuth , psychoController.createPsycho);
 
-router.get('/all' , adminAuth , psychoController.getAllPsycho);
+router.get('/all' , psychoController.getAllPsycho);
 
 router.get('/all/teacher' , teacherAuth ,  psychoController.getAllPsychoForTeacher);
 
