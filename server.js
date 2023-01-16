@@ -104,6 +104,10 @@ Psycho.belongsTo(Teacher);
 Psycho.belongsToMany(Student, { through: PsychoStudent, onDelete:"CASCADE"});
 
 
+// PsychoStudent
+PsychoStudent.belongsTo(Student);
+PsychoStudent.belongsTo(Psycho);
+
 // Group
 Group.belongsTo(Teacher);
 Group.belongsToMany(Student, { through: "Student_Group"});
