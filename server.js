@@ -65,6 +65,7 @@ const Wallet = require('./models/Wallet')
 const Group = require('./models/Group');
 const GroupLesson = require('./models/GroupLesson');
 const Psycho = require('./models/Psycho');
+const PsychoStudent = require('./models/PsychoStudent');
 
 
 //  parent
@@ -78,6 +79,7 @@ Student.belongsTo(Section);
 Student.belongsToMany(Course, { through: "Student_Course"});
 Student.belongsToMany(Group, { through: "Student_Group"});
 Student.belongsToMany(Forum, { through: "Student_Forum", onDelete:"CASCADE"});
+Student.belongsToMany(Psycho, { through: PsychoStudent, onDelete:"CASCADE"});
 Student.hasMany(Grade , {onDelete:"CASCADE" });
 Student.hasMany(Wallet , {onDelete:"CASCADE" });
 Student.hasMany(Post)
@@ -99,6 +101,8 @@ Course.hasMany(Unit ,{onDelete:"CASCADE"});
 
 // Psycho
 Psycho.belongsTo(Teacher);
+Psycho.belongsToMany(Student, { through: PsychoStudent, onDelete:"CASCADE"});
+
 
 // Group
 Group.belongsTo(Teacher);

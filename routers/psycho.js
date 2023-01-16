@@ -4,6 +4,7 @@ const psychoController = require('../controllers/psycho');
 
 const adminAuth = require('../middelware/AdminAuth');
 const teacherAuth = require('../middelware/TeacherAuth');
+const studentAuth = require('../middelware/StudentAuth');
 
 
 router.post('/create' , adminAuth , psychoController.createPsycho);
@@ -14,8 +15,11 @@ router.get('/all/teacher' , teacherAuth ,  psychoController.getAllPsychoForTeach
 
 router.get('/:psychoId' , psychoController.getPsychoById);
 
-router.delete('/:psychoId' , adminAuth ,psychoController.deletePsycho)
-router.put('/:psychoId' , adminAuth ,psychoController.updatePsycho)
+router.delete('/:psychoId' , adminAuth ,psychoController.deletePsycho);
+
+router.put('/register' , studentAuth , psychoController.registerPsycho);
+
+router.put('/:psychoId' , adminAuth ,psychoController.updatePsycho);
 
 
 

@@ -1,4 +1,6 @@
 const Psycho = require('../models/Psycho');
+const Student = require('../models/Student');
+const PsychoStudent = require('../models/PsychoStudent');
 const fs = require('fs');
 const path = require('path');
 
@@ -104,6 +106,29 @@ module.exports.deletePsycho =async (req,res,next) => {
         next(err);
     }
 } 
+
+
+module.exports.registerPsycho = async (req,res,next) => {
+    const {psychoId , studentId , description} = req.body;
+    try{
+        const student = await Student.findOne({where:{id:studentId}});
+        const psycho = await Psycho.findOne({where:{id:psychoId}});
+        if(psycho.price > student.money){
+            const error = new Error('المبلغ غير كافي');
+            error.statusCode = 422;
+            throw error;
+        }
+        const regiseredPsycho = new PsychoStudent({description:description , StudentId:studentId , PsychoId:psychoId});
+        await regiseredPsycho.save();
+        res.status(201).json({message:"تم طلب الجلسة بنجاح"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
 
 const clearImage=(filePath)=>{
     filePath=path.join(__dirname,'..',`images/${filePath}`);
