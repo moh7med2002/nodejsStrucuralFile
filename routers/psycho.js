@@ -13,9 +13,9 @@ router.get('/all' , psychoController.getAllPsycho);
 
 router.get('/all/teacher' , teacherAuth ,  psychoController.getAllPsychoForTeacher);
 
-router.get('/accepted' , adminAuth , psychoController.getAcceptedPsycho);
+router.get('/accepted/:psychoId' , adminAuth , psychoController.getAcceptedPsycho);
 
-router.get('/requested' , adminAuth , psychoController.getrequestededPsycho);
+router.get('/requested/:psychoId' , adminAuth , psychoController.getrequestededPsycho);
 
 router.get('/:psychoId' , psychoController.getPsychoById);
 

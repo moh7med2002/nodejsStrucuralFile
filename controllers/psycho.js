@@ -162,7 +162,7 @@ module.exports.acceptPsycho = async (req,res,next) => {
 
 
 module.exports.getAcceptedPsycho = async (req,res,next) => {
-    const {psychoId} = req.body;
+    const {psychoId} = req.params;
     try{
         const psychos = await PsychoStudent.findAll({where:{PsychoId:psychoId , status:1} , include:{all:true}})
         res.status(200).json({psychos})
@@ -176,7 +176,7 @@ module.exports.getAcceptedPsycho = async (req,res,next) => {
 }
 
 module.exports.getrequestededPsycho = async (req,res,next) => {
-    const {psychoId} = req.body;
+    const {psychoId} = req.params;
     try{
         const psychos = await PsychoStudent.findAll({where:{PsychoId:psychoId , status:0} , include:{all:true}})
         res.status(200).json({psychos})
