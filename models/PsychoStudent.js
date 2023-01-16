@@ -10,7 +10,7 @@ const PsychoStudent = Seqalize.define('Psycho_Student' , {
     },
     description:{
         type:DataTypes.TEXT,
-        required: true
+        defaultValue : ""
     },
     startTime:{
         type : DataTypes.TIME,
