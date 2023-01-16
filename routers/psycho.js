@@ -17,6 +17,10 @@ router.get('/accepted/:psychoId' , adminAuth , psychoController.getAcceptedPsych
 
 router.get('/requested/:psychoId' , adminAuth , psychoController.getrequestededPsycho);
 
+router.get('/teacher/accepted/:psychoId' , teacherAuth , psychoController.getAcceptedPsycho);
+
+router.get('/teacher/requested/:psychoId' , teacherAuth , psychoController.getrequestededPsycho);
+
 router.get('/:psychoId' , psychoController.getPsychoById);
 
 router.delete('/:psychoId' , adminAuth ,psychoController.deletePsycho);
