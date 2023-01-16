@@ -25,8 +25,11 @@ router.put('/register' , studentAuth , psychoController.registerPsycho);
 
 router.put('/accept' , adminAuth , psychoController.acceptPsycho);
 
+router.put('/teacher/accept' , teacherAuth , psychoController.acceptPsycho);
+
 router.put('/reject' , adminAuth , psychoController.rejectPsycho);
 
+router.put('/teacher/reject' , teacherAuth , psychoController.rejectPsycho);
 
 router.put('/:psychoId' , adminAuth ,psychoController.updatePsycho);
 
