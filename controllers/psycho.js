@@ -67,6 +67,20 @@ module.exports.getAllPsychoForTeacher = async (req,res,next) => {
     }
 }
 
+module.exports.getAllPsychoForStudent = async (req,res,next) => {
+    const studentId = req.studentId;
+    try{
+        const psychos = await PsychoStudent.findAll({where:{StudentId:studentId , status:1}, include:{all:true}});
+        res.status(200).json({psychos});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
 
 module.exports.updatePsycho = async (req,res,next) => {
     const {title,price,duration , description} = req.body;

@@ -13,6 +13,8 @@ router.get('/all' , psychoController.getAllPsycho);
 
 router.get('/all/teacher' , teacherAuth ,  psychoController.getAllPsychoForTeacher);
 
+router.get('/all/student' , studentAuth ,  psychoController.getAllPsychoForStudent);
+
 router.get('/accepted/:psychoId' , adminAuth , psychoController.getAcceptedPsycho);
 
 router.get('/requested/:psychoId' , adminAuth , psychoController.getrequestededPsycho);
