@@ -214,6 +214,7 @@ module.exports.updateStudentImage = async (req,res,next) =>{
     }
 }
 
+
 const clearImage=(filePath)=>{
     filePath=path.join(__dirname,'..',`images/${filePath}`);
     fs.unlink(filePath,(err)=>{
