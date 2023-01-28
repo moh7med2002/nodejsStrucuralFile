@@ -25,7 +25,7 @@ router.get('/posts/:forumId',studentAuth, postController.getAllPost);
 router.get('/comments/:postId',studentAuth, commentController.getAllComment);
 
 router.post('/post/:forumId' , studentAuth , postController.addPost );
-router.delete('/post',studentAuth, postController.deletePost);
+router.delete('/post/:postId',studentAuth, postController.deletePost);
 
 router.post('/comment/:postId' , studentAuth , commentController.addComment );
 router.delete('/comment/:commentId',studentAuth, commentController.deleteComment);

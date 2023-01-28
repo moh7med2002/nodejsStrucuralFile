@@ -9,6 +9,7 @@ router.post('/register' , adminControllers.registerAdmin);
 router.post('/login' , adminControllers.loginAdmin);
 
 router.get('/students/all' , adminAuth , adminControllers.getAllStudents);
+router.get('/forums/all' , adminAuth , adminControllers.getAllForums);
 
 router.get('/students/:studentId' , adminAuth , adminControllers.getStudent);
 
