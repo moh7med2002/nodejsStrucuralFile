@@ -15,7 +15,7 @@ exports.addMoneyForWallet = async(req,res,next)=>
             error.statusCode == 401
             throw error
         }
-        const wallet = await Wallet.create({StudentId:studentId,money:+money,image:req.file.filename})
+        const wallet = await Wallet.create({StudentId:studentId,money:+money,image:req.file.filename,status:0})
         await wallet.save()
         res.status(201).json({messgae:"تم اضافة المبلغ للإدارة للقبول أو الرفض"})
     }
@@ -36,10 +36,8 @@ exports.acceptMoney = async(req,res,next)=>
         const student = await Student.findOne({where:{id:wallet.StudentId}})
         student.money += wallet.money
         await student.save();
-        if(wallet.image){
-            clearImage(wallet.image);
-        }
-        await wallet.destroy();
+        wallet.status = 2;
+        await wallet.save();
         res.status(200).json({message:"تم قبول المبلغ من الطالب"})
     }
     catch(err)
@@ -56,10 +54,8 @@ exports.rejectMoney = async(req,res,next)=>
     try{
         const {walletId} = req.params
         const wallet = await Wallet.findOne({where:{id:walletId}})
-        if(wallet.image){
-            clearImage(wallet.image);
-        }
-        await wallet.destroy();
+        wallet.status = 1;
+        await wallet.save();
         res.status(200).json({message:"تم رفض المبلغ من الطالب"})
     }
     catch(err)
