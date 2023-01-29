@@ -5,7 +5,7 @@ exports.createForum = async (req, res, next) => {
     const { title, TeacherId, subjectId } = req.body;
 
     if (req.adminId) {
-      const forum = new Forum({ ...req.body, image: imageName });
+      const forum = new Forum({ ...req.body, SubjectId:subjectId , image: imageName });
       await forum.save();
       res.status(201).json("تم انشاء النادي");
     } else {
