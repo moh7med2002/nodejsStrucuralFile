@@ -1,14 +1,14 @@
 const Post = require("../models/Post");
 
 exports.addPost = async (req, res, next) => {
-  const {forumId} = req.params;
+  const { forumId } = req.params;
+
   try {
-    if (req.body.TeacherId) {
-      const { content, TeacherId } = req.body;
-    } else {
-      const { content, StudentId } = req.body;
-    }
-    const post = new Post({ ...req.body , ForumId: forumId});
+    const id = req.teacherId ? req.teacherId : req.studentId;
+    const post = req.teacherId
+      ? new Post({ ...req.body, TeacherId: id, ForumId: forumId })
+      : new Post({ ...req.body, StudentId: id, ForumId: forumId });
+
     await post.save();
     res.status(201).json("تم انشاء البوست");
   } catch (err) {
@@ -20,7 +20,7 @@ exports.addPost = async (req, res, next) => {
 };
 
 module.exports.deletePost = async (req, res, next) => {
-  const { postId } = req.query;
+  const { postId } = req.params;
   try {
     const post = await Post.findOne({ where: { id: postId } });
     console.log("post: ", post);
@@ -40,10 +40,10 @@ module.exports.deletePost = async (req, res, next) => {
 };
 
 module.exports.getAllPost = async (req, res, next) => {
-  const {forumId} = req.params;
+  const { forumId } = req.params;
   try {
     const posts = await Post.findAll({
-      where:{ForumId : forumId},
+      where: { ForumId: forumId },
       include: { all: true },
     });
     res.status(200).json({ posts });

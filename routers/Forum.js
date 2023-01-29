@@ -11,5 +11,6 @@ const teacherAuth = require("../middelware/TeacherAuth");
 router.post("/create", adminAuth, forumController.createForum);
 router.get('/posts/:forumId', postController.getAllPost);
 router.get('/comments/:postId',commentController.getAllComment);
+router.delete("/:forumId", adminAuth, forumController.deleteForum);
 
 module.exports = router;

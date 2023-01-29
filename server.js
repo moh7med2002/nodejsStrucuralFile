@@ -147,6 +147,7 @@ Answer.belongsTo(Question)
 Forum.belongsToMany(Student, { through: "Student_Forum", onDelete:"CASCADE" });
 Forum.belongsTo(Teacher)
 Forum.hasMany(Post , {onDelete:"CASCADE"})
+Forum.hasOne(Subject)
 
 // Post
 Post.belongsTo(Forum)
@@ -170,6 +171,7 @@ Class.hasMany(Section);
 Subject.belongsTo(Class)
 Subject.belongsTo(Level)
 Subject.belongsTo(Section);
+Subject.belongsTo(Forum);
 
 
 //  Section
