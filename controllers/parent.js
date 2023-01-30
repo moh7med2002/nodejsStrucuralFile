@@ -81,15 +81,15 @@ module.exports.requestStudentToAdd = async (req,res,next) => {
     const parentId = req.parentId;
     const {students} = req.body;
     try{
-        for (const std of students) {
-            const newRequest = ParentWaiting.create({
-                status:0,
-                ParentId : parentId,
-                StudentId : std
-            });
-            await newRequest.save();
-        };
-        res.status(201).json({message:"تم إضافة طلب الابناء للمراجعة"});
+        // for (const std of students) {
+        //     const newRequest = ParentWaiting.create({
+        //         status:0,
+        //         ParentId : parentId,
+        //         StudentId : std
+        //     });
+        //     await newRequest.save();
+        // };
+        res.status(201).json({message:"تم إضافة طلب الابناء للمراجعة" , students});
     }
     catch(err){
         if(! err.statusCode){
