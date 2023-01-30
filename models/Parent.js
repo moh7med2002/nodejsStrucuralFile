@@ -10,6 +10,10 @@ const Parent = Seqalize.define('Parent' , {
         type:DataTypes.STRING,
         required: true
     },
+    name:{
+        type:DataTypes.STRING,
+        required: true
+    }
 });
 
 module.exports = Parent;
