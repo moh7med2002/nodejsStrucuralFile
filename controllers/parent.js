@@ -1,5 +1,6 @@
 const Parent = require('../models/Parent');
 const Student = require('../models/Student');
+const ParentWaiting = require('../models/ParentWaiting');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -67,6 +68,28 @@ module.exports.getAllStudent = async (req,res,next) => {
     try{
         const students = await Student.findAll();
         res.status(200).json({students});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.requestStudentToAdd = async (req,res,next) => {
+    const parentId = req.parentId;
+    const {students} = req.body;
+    try{
+        for (const std of students) {
+            const newRequest = ParentWaiting.create({
+                staus:0,
+                ParentId : parentId,
+                StudentId : std
+            });
+            await newRequest.save();
+        };
+        res.status(201).json({message:"تم إضافة طلب الابناء للمراجعة"});
     }
     catch(err){
         if(! err.statusCode){

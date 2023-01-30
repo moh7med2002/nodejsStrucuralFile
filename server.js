@@ -66,10 +66,13 @@ const Group = require('./models/Group');
 const GroupLesson = require('./models/GroupLesson');
 const Psycho = require('./models/Psycho');
 const PsychoStudent = require('./models/PsychoStudent');
+const ParentWaiting = require('./models/ParentWaiting');
 
 
 //  parent
 Parent.hasMany(Student,{onDelete:"SET NULL"});
+Parent.belongsToMany(Student, { through: ParentWaiting, onDelete:"CASCADE"});
+
 
 // Student
 Student.belongsTo(Parent);
@@ -83,9 +86,11 @@ Student.belongsToMany(Psycho, { through: PsychoStudent, onDelete:"CASCADE"});
 Student.hasMany(Grade , {onDelete:"CASCADE" });
 Student.hasMany(Wallet , {onDelete:"CASCADE" });
 Student.hasMany(Post)
+Student.belongsToMany(Parent, { through: ParentWaiting, onDelete:"CASCADE"});
+
 
 //  Teacher
-Teacher.hasMany(Course , {onDelete:"SET NULL"});
+Teacher.hasMany(Course);
 Teacher.hasMany(Group , {onDelete:"SET NULL"});
 Teacher.hasMany(Forum , {onDelete:"SET NULL"});
 Teacher.hasMany(Psycho , {onDelete:"SET NULL"});
