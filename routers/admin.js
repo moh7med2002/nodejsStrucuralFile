@@ -12,10 +12,12 @@ router.get('/students/all' , adminAuth , adminControllers.getAllStudents);
 router.get('/forums/all' , adminAuth , adminControllers.getAllForums);
 
 router.get('/students/:studentId' , adminAuth , adminControllers.getStudent);
+router.get('/forums/:forumId' , adminAuth , adminControllers.getForum);
 
 router.put('/student/password' , adminAuth , adminControllers.updateStudentPassword);
 
 router.put('/student/info' , adminAuth , adminControllers.updateStudentInfo);
+router.put('/forum/info' , adminAuth , adminControllers.updateForumInfo);
 
 
 module.exports = router;

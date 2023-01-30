@@ -105,6 +105,20 @@ module.exports.getStudent = async (req,res,next) => {
     }
 }
 
+module.exports.getForum = async (req,res,next) => {
+    const {forumId} = req.params;
+    try{
+        const forum = await Forum.findOne({where : {id : forumId}, include:{all:true}});
+        res.status(200).json({forum});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
 module.exports.updateStudentInfo = async (req,res,next) =>{
     try{
         const {id,name , email} = req.body
@@ -125,6 +139,29 @@ module.exports.updateStudentInfo = async (req,res,next) =>{
         student.email = email
         await student.save()
         res.status(201).json({message:"تم تعديل بيانات الطالب"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.updateForumInfo = async (req,res,next) =>{
+    try{
+        const {id,name , subject} = req.body
+        const forum = await Forum.findOne({where:{id:id}})
+        if(!forum)
+        {
+            const error = new Error('النادي غير موجود')
+            error.statusCode = 404
+            throw error
+        }
+        forum.name = name
+        forum.Subject = subject
+        await forum.save()
+        res.status(201).json({message:"تم تعديل بيانات النادي"})
     }
     catch(err){
         if(! err.statusCode){
