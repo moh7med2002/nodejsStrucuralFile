@@ -20,7 +20,7 @@ router.put('/forum/info' , adminAuth , adminControllers.updateForumInfo);
 
 router.get('/parent/request' , adminAuth , adminControllers.getAllParentWaiting);
 router.put('/parent/request/accept/:id' , adminAuth , adminControllers.acceptParentRequest);
-router.get('/parent/request/reject/:id' , adminAuth , adminControllers.rejectParentRequest);
+router.put('/parent/request/reject/:id' , adminAuth , adminControllers.rejectParentRequest);
 
 
 
