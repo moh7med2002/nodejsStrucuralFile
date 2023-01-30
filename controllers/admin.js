@@ -1,8 +1,9 @@
 const Admin = require('../models/Admin');
-const Student = require('../models/Student')
+const Student = require('../models/Student');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Forum = require('../models/Forum');
+const ParentWaiting = require('../models/ParentWaiting')
 
 module.exports.registerAdmin = async(req,res,next)=>
 {
@@ -189,6 +190,19 @@ module.exports.updateStudentPassword = async (req,res,next) => {
         student.password = hashPass
         await student.save()
         res.status(201).json({message:"تم تعديل كلمة المرور"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.getAllParentWaiting = async (req,res,next) => {
+    try{
+        const list = await ParentWaiting.findAll({where:{status:0} , include:{all:true}});
+        res.status(200).json({list});
     }
     catch(err){
         if(! err.statusCode){

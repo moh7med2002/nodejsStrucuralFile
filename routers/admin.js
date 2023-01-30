@@ -18,5 +18,7 @@ router.put('/student/password' , adminAuth , adminControllers.updateStudentPassw
 router.put('/student/info' , adminAuth , adminControllers.updateStudentInfo);
 router.put('/forum/info' , adminAuth , adminControllers.updateForumInfo);
 
+router.get('/parent/request' , adminAuth , adminControllers.getAllParentWaiting)
+
 
 module.exports = router;
