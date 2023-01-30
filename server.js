@@ -235,6 +235,9 @@ app.use('/api/forum' , forumRouter);
 const psychoRouter = require('./routers/psycho');
 app.use('/api/psycho' , psychoRouter);
 
+const parentRouter = require('./routers/parent');
+app.use('/api/parent' , parentRouter);
+
 
 app.use((error,req,res,next)=>{
     console.log(error);
