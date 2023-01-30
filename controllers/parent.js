@@ -83,7 +83,7 @@ module.exports.requestStudentToAdd = async (req,res,next) => {
     try{
         for (const std of students) {
             const newRequest = ParentWaiting.create({
-                staus:0,
+                status:0,
                 ParentId : parentId,
                 StudentId : std
             });
