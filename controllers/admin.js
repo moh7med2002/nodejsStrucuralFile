@@ -151,6 +151,7 @@ module.exports.updateStudentInfo = async (req,res,next) =>{
 module.exports.updateForumInfo = async (req,res,next) =>{
     try{
         const {id,name , subject} = req.body
+        console.log("id,name , subject bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",id,name , subject);
         const forum = await Forum.findOne({where:{id:id}})
         if(!forum)
         {
@@ -158,9 +159,11 @@ module.exports.updateForumInfo = async (req,res,next) =>{
             error.statusCode = 404
             throw error
         }
-        forum.name = name
-        forum.Subject = subject
+        
+        forum.Subject= subject
+        forum.title = name
         await forum.save()
+        console.log(forum, 'forummmmmmmmmmmmmmmmmmmmmmmmmm');
         res.status(201).json({message:"تم تعديل بيانات النادي"})
     }
     catch(err){

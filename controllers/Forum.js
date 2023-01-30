@@ -21,7 +21,6 @@ exports.createForum = async (req, res, next) => {
 
 module.exports.deleteForum = async (req, res, next) => {
   const { forumId } = req.params;
-  console.log("forumId : fffffffffffffff", forumId);
   try {
     const forum = await Forum.findOne({ where: { id: forumId } });
     console.log("forum: ", forum);
