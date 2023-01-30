@@ -211,3 +211,35 @@ module.exports.getAllParentWaiting = async (req,res,next) => {
         next(err);
     }
 }
+
+module.exports.acceptParentRequest = async(req,res,next) => {
+    const {id} = req.params;
+    try{
+        const parentRequest = await ParentWaiting.findOne({where:{id:id}});
+        parentRequest.status = 2;
+        await parentRequest.save();
+        res.status(201).json({message:"تم قبول طلب اضافة الإبن للأب"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.rejectParentRequest = async(req,res,next) => {
+    const {id} = req.params;
+    try{
+        const parentRequest = await ParentWaiting.findOne({where:{id:id}});
+        parentRequest.status = 1;
+        await parentRequest.save();
+        res.status(201).json({message:"تم رفض طلب اضافة الإبن للأب"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
