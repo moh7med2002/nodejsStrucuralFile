@@ -65,7 +65,7 @@ exports.login = async(req,res,next)=>{
 
 module.exports.getAllStudent = async (req,res,next) => {
     try{
-        const students = await Student.find();
+        const students = await Student.findAll();
         res.status(200).json({students});
     }
     catch(err){
