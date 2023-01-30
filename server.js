@@ -71,8 +71,12 @@ const ParentWaiting = require('./models/ParentWaiting');
 
 //  parent
 Parent.hasMany(Student,{onDelete:"SET NULL"});
-Parent.belongsToMany(Student, { through: ParentWaiting, onDelete:"CASCADE"});
+Parent.hasMany(ParentWaiting);
 
+
+// ParentWaiting
+ParentWaiting.belongsTo(Student);
+ParentWaiting.belongsTo(Parent);
 
 // Student
 Student.belongsTo(Parent);
@@ -86,7 +90,7 @@ Student.belongsToMany(Psycho, { through: PsychoStudent, onDelete:"CASCADE"});
 Student.hasMany(Grade , {onDelete:"CASCADE" });
 Student.hasMany(Wallet , {onDelete:"CASCADE" });
 Student.hasMany(Post)
-Student.belongsToMany(Parent, { through: ParentWaiting, onDelete:"CASCADE"});
+Student.hasMany(ParentWaiting);
 
 
 //  Teacher
