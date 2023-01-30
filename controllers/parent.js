@@ -1,4 +1,5 @@
 const Parent = require('../models/Parent');
+const Student = require('../models/Student');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -52,6 +53,20 @@ exports.login = async(req,res,next)=>{
         "token"
         );
         res.status(200).json({parent:other, token:token});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+
+module.exports.getAllStudent = async (req,res,next) => {
+    try{
+        const students = await Student.find();
+        res.status(200).json({students});
     }
     catch(err){
         if(! err.statusCode){
