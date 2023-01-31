@@ -10,6 +10,6 @@ router.post('/login' , parentController.login);
 router.get('/students/all' , parentController.getAllStudent);
 router.get('/students/child' , parentAuth , parentController.getHisChild);
 router.post('/students/add' , parentAuth  , parentController.requestStudentToAdd);
-router.get('/student/grade/:studentId' , parentAuth , parentController.getGrades);
+router.get('/student/:studentId' , parentAuth , parentController.getGrades);
 
 module.exports = router;

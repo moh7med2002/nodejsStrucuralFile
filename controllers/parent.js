@@ -4,6 +4,7 @@ const ParentWaiting = require('../models/ParentWaiting');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Grade = require('../models/Grade');
+const Exam = require('../models/Exam');
 
 module.exports.register = async(req,res,next)=>
 {
