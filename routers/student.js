@@ -28,6 +28,7 @@ router.post('/post/:forumId' , studentAuth , postController.addPost );
 router.delete('/post/:postId',studentAuth, postController.deletePost);
 
 router.post('/comment/:postId' , studentAuth , commentController.addComment );
+router.post('/joinForum/:forumId' , studentAuth , studentController.joinForum );
 router.delete('/comment/:commentId',studentAuth, commentController.deleteComment);
 
 
