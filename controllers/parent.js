@@ -3,6 +3,7 @@ const Student = require('../models/Student');
 const ParentWaiting = require('../models/ParentWaiting');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Grade = require('../models/Grade');
 
 module.exports.register = async(req,res,next)=>
 {
@@ -105,6 +106,24 @@ module.exports.requestStudentToAdd = async (req,res,next) => {
             await newRequest.save();
         };
         res.status(201).json({message:"تم إضافة طلب الابناء للمراجعة" , students});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+//  get student grades
+module.exports.getGrades = async (req,res,next) => {
+    const studentId = req.params.studentId;
+    try{
+        const student = await Student.findOne({where:{id:studentId}, include:{all:true}});
+        const grades = await Grade.findAll({where:{StudentId : studentId} ,
+        include : {model: Exam}
+        })
+        res.status(200).json({grades , student});
     }
     catch(err){
         if(! err.statusCode){
