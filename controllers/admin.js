@@ -218,6 +218,9 @@ module.exports.acceptParentRequest = async(req,res,next) => {
         const parentRequest = await ParentWaiting.findOne({where:{id:id}});
         parentRequest.status = 2;
         await parentRequest.save();
+        const student = await Student.findOne({where:{id:parentRequest.StudentId}});
+        student.ParentId = parentRequest.ParentId;
+        await student.save();
         res.status(201).json({message:"تم قبول طلب اضافة الإبن للأب"});
     }
     catch(err){

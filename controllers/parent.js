@@ -77,6 +77,21 @@ module.exports.getAllStudent = async (req,res,next) => {
     }
 }
 
+module.exports.getHisChild = async (req,res,next) => {
+    const parentId = req.parentId;
+    try{
+        const students = await Student.findAll({where:{ParentId:parentId}, include:{all:true}});
+        res.status(200).json({students});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+
+}
+
 module.exports.requestStudentToAdd = async (req,res,next) => {
     const parentId = req.parentId;
     const {students} = req.body;
