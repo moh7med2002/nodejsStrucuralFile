@@ -39,3 +39,17 @@ module.exports.deleteForum = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.getForum = async (req,res,next) => {
+  const {forumId} = req.params;
+  try{
+      const forum = await Forum.findOne({where : {id : forumId}, include:{all:true}});
+      res.status(200).json({forum});
+  }
+  catch(err){
+      if(! err.statusCode){
+          err.statusCode=500;
+      }
+      next(err);
+  }
+}
