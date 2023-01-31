@@ -1,8 +1,9 @@
 const Admin = require('../models/Admin');
-const Student = require('../models/Student')
+const Student = require('../models/Student');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Forum = require('../models/Forum');
+const ParentWaiting = require('../models/ParentWaiting')
 
 module.exports.registerAdmin = async(req,res,next)=>
 {
@@ -105,6 +106,20 @@ module.exports.getStudent = async (req,res,next) => {
     }
 }
 
+module.exports.getForum = async (req,res,next) => {
+    const {forumId} = req.params;
+    try{
+        const forum = await Forum.findOne({where : {id : forumId}, include:{all:true}});
+        res.status(200).json({forum});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
 module.exports.updateStudentInfo = async (req,res,next) =>{
     try{
         const {id,name , email} = req.body
@@ -134,6 +149,32 @@ module.exports.updateStudentInfo = async (req,res,next) =>{
     }
 }
 
+module.exports.updateForumInfo = async (req,res,next) =>{
+    try{
+        const {id,name , subject} = req.body
+        console.log("id,name , subject bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",id,name , subject);
+        const forum = await Forum.findOne({where:{id:id}})
+        if(!forum)
+        {
+            const error = new Error('النادي غير موجود')
+            error.statusCode = 404
+            throw error
+        }
+        
+        forum.Subject= subject
+        forum.title = name
+        await forum.save()
+        console.log(forum, 'forummmmmmmmmmmmmmmmmmmmmmmmmm');
+        res.status(201).json({message:"تم تعديل بيانات النادي"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
 
 module.exports.updateStudentPassword = async (req,res,next) => {
     try{
@@ -149,6 +190,51 @@ module.exports.updateStudentPassword = async (req,res,next) => {
         student.password = hashPass
         await student.save()
         res.status(201).json({message:"تم تعديل كلمة المرور"})
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.getAllParentWaiting = async (req,res,next) => {
+    try{
+        const list = await ParentWaiting.findAll({where:{status:0} , include:{all:true}});
+        res.status(200).json({list});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.acceptParentRequest = async(req,res,next) => {
+    const {id} = req.params;
+    try{
+        const parentRequest = await ParentWaiting.findOne({where:{id:id}});
+        parentRequest.status = 2;
+        await parentRequest.save();
+        res.status(201).json({message:"تم قبول طلب اضافة الإبن للأب"});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.rejectParentRequest = async(req,res,next) => {
+    const {id} = req.params;
+    try{
+        const parentRequest = await ParentWaiting.findOne({where:{id:id}});
+        parentRequest.status = 1;
+        await parentRequest.save();
+        res.status(201).json({message:"تم رفض طلب اضافة الإبن للأب"});
     }
     catch(err){
         if(! err.statusCode){
