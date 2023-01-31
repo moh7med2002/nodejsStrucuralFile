@@ -122,7 +122,7 @@ module.exports.getGrades = async (req,res,next) => {
     try{
         const student = await Student.findOne({where:{id:studentId}, include:{all:true}});
         const grades = await Grade.findAll({where:{StudentId : studentId} ,
-        include : {model: Exam}
+        include : {all: true}
         })
         res.status(200).json({grades , student});
     }
