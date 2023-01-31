@@ -19,6 +19,7 @@ router.put('/student/info' , adminAuth , adminControllers.updateStudentInfo);
 router.put('/forum/info' , adminAuth , adminControllers.updateForumInfo);
 
 router.get('/parent/request' , adminAuth , adminControllers.getAllParentWaiting);
+router.get('/parent/request/history' , adminAuth , adminControllers.getAllParentWaitingHistory);
 router.put('/parent/request/accept/:id' , adminAuth , adminControllers.acceptParentRequest);
 router.put('/parent/request/reject/:id' , adminAuth , adminControllers.rejectParentRequest);
 
