@@ -30,7 +30,6 @@ const Teacher = Seqalize.define('Teacher' , {
     },
     image:{
         type:DataTypes.STRING,
-        required: true
     },
 });
 
