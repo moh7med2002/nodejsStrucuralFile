@@ -28,6 +28,10 @@ const Teacher = Seqalize.define('Teacher' , {
         type:DataTypes.STRING,
         required: true
     },
+    image:{
+        type:DataTypes.STRING,
+        required: true
+    },
 });
 
 module.exports = Teacher;
