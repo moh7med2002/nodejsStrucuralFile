@@ -18,6 +18,6 @@ router.post('/post/:forumId' , teacherAuth , postController.addPost );
 router.delete('/post',teacherAuth, postController.deletePost);
 router.post('/comment/:postId' , teacherAuth , commentController.addComment );
 router.delete('/comment/:commentId',teacherAuth, commentController.deleteComment);
-router.get('/teacher/:id',teacherAuth,teacherController.getTeacher)
+router.get('/:teacherId',teacherAuth,teacherController.getTeacher)
 
 module.exports = router;
