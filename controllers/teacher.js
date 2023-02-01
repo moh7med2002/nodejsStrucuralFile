@@ -105,3 +105,20 @@ module.exports.getTeacherForum = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getTeacher = async(req,res,next)=>
+{
+  try{
+    const {teacherId} = req.params
+    const teacher = await Teacher.findOne({where:{id:teacherId}})
+    res.status(200).json({teacher})
+  }
+  catch(err)
+  {
+    if(!err.statusCode)
+    {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
