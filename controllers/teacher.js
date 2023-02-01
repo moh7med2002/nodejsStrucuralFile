@@ -122,3 +122,38 @@ exports.getTeacher = async(req,res,next)=>
     next(err)
   }
 }
+
+exports.updateTeacherImage = async(req,res,next)=>
+{
+  const teacherId = req.teacherId
+  try{
+    if (!req.file) {
+      const error = new Error("الصورة غير موجودة");
+      error.statusCode = 401;
+      throw error;
+    }
+    const teacher = await Teacher.findOne({ where: { id: teacherId } });
+    if (teacher.image) {
+      clearImage(teacher.image);
+    }
+    teacher.image = req.file.filename;
+    await teacher.save();
+    res.status(201).json({ message: "تم تعديل صورة بنجاح", teacher});
+  }
+  catch(err)
+  {
+    if(!err.statusCode)
+    {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
+/** delete image from folder images */
+const clearImage = (filePath) => {
+  filePath = path.join(__dirname, "..", `images/${filePath}`);
+  fs.unlink(filePath, (err) => {
+    console.log(err);
+  });
+};

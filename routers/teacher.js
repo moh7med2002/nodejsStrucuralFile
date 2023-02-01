@@ -19,5 +19,6 @@ router.delete('/post',teacherAuth, postController.deletePost);
 router.post('/comment/:postId' , teacherAuth , commentController.addComment );
 router.delete('/comment/:commentId',teacherAuth, commentController.deleteComment);
 router.get('/:teacherId',teacherAuth,teacherController.getTeacher)
+router.put('/update/image' , teacherAuth ,teacherController.updateTeacherImage);
 
 module.exports = router;
