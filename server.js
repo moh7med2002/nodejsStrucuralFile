@@ -57,10 +57,15 @@ const Psycho = require("./models/Psycho");
 const PsychoStudent = require("./models/PsychoStudent");
 const ParentWaiting = require("./models/ParentWaiting");
 const ForumStudent = require("./models/ForumStudent");
+const Notifications = require('./models/Notifications')
+
+// Admin
+Admin.hasMany(Notifications)
 
 //  parent
 Parent.hasMany(Student, { onDelete: "SET NULL" });
 Parent.hasMany(ParentWaiting);
+Parent.hasMany(Notifications)
 
 // ParentWaiting
 ParentWaiting.belongsTo(Student);
@@ -80,12 +85,16 @@ Student.hasMany(Wallet, { onDelete: "CASCADE" });
 Student.hasMany(Post);
 Student.hasMany(ParentWaiting);
 Student.hasMany(ForumStudent);
+Student.hasMany(Notifications)
+
 //  Teacher
 Teacher.hasMany(Course);
 Teacher.hasMany(Group, { onDelete: "SET NULL" });
 Teacher.hasMany(Forum, { onDelete: "SET NULL" });
 Teacher.hasMany(Psycho, { onDelete: "SET NULL" });
 Teacher.hasMany(Post);
+Teacher.hasMany(Notifications)
+
 // Course
 Course.belongsTo(Teacher);
 Course.belongsToMany(Student, { through: "Student_Course" });
@@ -178,6 +187,12 @@ Wallet.belongsTo(Student);
 //ForumStudent
 ForumStudent.belongsTo(Forum);
 ForumStudent.belongsTo(Student);
+
+// Notifications
+Notifications.belongsTo(Student)
+Notifications.belongsTo(Parent)
+Notifications.belongsTo(Teacher)
+Notifications.belongsTo(Admin)
 
 // refer routes
 const studentRouter = require("./routers/student");
