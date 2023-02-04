@@ -7,6 +7,8 @@ const Grade = require('../models/Grade');
 const Exam = require('../models/Exam');
 const Unit = require('../models/Unit');
 const Course = require('../models/Course');
+const Notification = require('../models/Notifications')
+
 
 module.exports.register = async(req,res,next)=>
 {
@@ -135,6 +137,34 @@ module.exports.getGrades = async (req,res,next) => {
         }
         })
         res.status(200).json({grades , student});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.getNotification = async (req,res,next) => {
+    const parentId = req.parentId;
+    try{
+        const notifications = await Notification.findAll({where:{ParentId:parentId}});
+        res.status(200).json({notifications});
+    }
+    catch(err){
+        if(! err.statusCode){
+            err.statusCode=500;
+        }
+        next(err);
+    }
+}
+
+module.exports.updateNoificationsStatus = async (req,res,next) =>{
+    const parentId = req.parentId;
+    try{
+        const updateNotifications = await Notification.update({seen:true},{where:{ParentId:parentId}});
+        res.status(201).json({message:"تم تحديث الاشعارات"})
     }
     catch(err){
         if(! err.statusCode){

@@ -14,6 +14,10 @@ const Notifications = Seqalize.define('Notifications' , {
     },
     link:{
         type:DataTypes.STRING,
+    },
+    seen:{
+        type : DataTypes.BOOLEAN,
+        required : true
     }
 });
 

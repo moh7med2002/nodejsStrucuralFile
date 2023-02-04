@@ -3,7 +3,8 @@ const Student = require('../models/Student');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Forum = require('../models/Forum');
-const ParentWaiting = require('../models/ParentWaiting')
+const ParentWaiting = require('../models/ParentWaiting');
+const Notification = require('../models/Notifications')
 
 module.exports.registerAdmin = async(req,res,next)=>
 {
@@ -234,6 +235,12 @@ module.exports.acceptParentRequest = async(req,res,next) => {
         const student = await Student.findOne({where:{id:parentRequest.StudentId}});
         student.ParentId = parentRequest.ParentId;
         await student.save();
+        const newNotifucation = await Notification.create({
+            title:`تم قبول طلبك في اضافة الطالب ${student.name}`,
+            seen : false,
+            ParentId : parentRequest.ParentId,
+        });
+        await newNotifucation.save();
         res.status(201).json({message:"تم قبول طلب اضافة الإبن للأب"});
     }
     catch(err){
@@ -250,6 +257,13 @@ module.exports.rejectParentRequest = async(req,res,next) => {
         const parentRequest = await ParentWaiting.findOne({where:{id:id}});
         parentRequest.status = 1;
         await parentRequest.save();
+        const student = await Student.findOne({where:{id:parentRequest.StudentId}});
+        const newNotifucation = await Notification.create({
+            title:`تم رفض طلبك في اضافة الطالب ${student.name}`,
+            seen : false,
+            ParentId : parentRequest.ParentId,
+        });
+        await newNotifucation.save();
         res.status(201).json({message:"تم رفض طلب اضافة الإبن للأب"});
     }
     catch(err){
