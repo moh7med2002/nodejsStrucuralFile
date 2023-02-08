@@ -20,7 +20,7 @@ router.get('/my-coures' , studentAuth ,studentController.getRegistredCourses);
 router.put('/update/image' , studentAuth , studentController.updateStudentImage);
 
 
-router.get('/:studentId' , studentAuth , studentController.getUser);
+router.get('/:studentId' , studentController.getUser);
 router.get('/posts/:forumId',studentAuth, postController.getAllPost);
 router.get('/comments/:postId',studentAuth, commentController.getAllComment);
 
