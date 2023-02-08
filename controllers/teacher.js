@@ -157,3 +157,19 @@ const clearImage = (filePath) => {
     console.log(err);
   });
 };
+
+module.exports.getTeacherForums = async (req, res, next) => {
+  const teacherId = req.teacherId;
+  try {
+    const forums = await Forum.findAll({
+      where: { TeacherId: teacherId },
+      include: { all: true },
+    });
+    res.status(200).json({ forums });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
