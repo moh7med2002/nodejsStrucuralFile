@@ -214,7 +214,6 @@ const clearImage = (filePath) => {
 
 module.exports.joinForum = async (req, res, next) => {
   const studentId = req.studentId;
-  console.log("studentId: ", studentId);
   const { forumId } = req.params;
   try {
     const forumFind = await ForumStudent.findOne({
@@ -225,10 +224,11 @@ module.exports.joinForum = async (req, res, next) => {
     });
 
     if (forumFind) res.status(302).json({ message: "أنت مشترك بالنادي" });
-    const forumStudent = await ForumStudent.create({
+    const forumStudent = new ForumStudent({
       ForumId: forumId,
       StudentId: studentId,
     });
+    await forumStudent.save();
     res.status(201).json({ message: "تم الإشتراك في النادي بنجاح" });
   } catch (err) {
     if (!err.statusCode) {

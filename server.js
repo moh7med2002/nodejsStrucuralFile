@@ -78,14 +78,14 @@ Student.belongsTo(Class);
 Student.belongsTo(Section);
 Student.belongsToMany(Course, { through: "Student_Course" });
 Student.belongsToMany(Group, { through: "Student_Group" });
-Student.belongsToMany(Forum, { through: "Student_Forum", onDelete: "CASCADE" });
+Student.belongsToMany(Forum, { through: ForumStudent, onDelete: "CASCADE" });
 Student.belongsToMany(Psycho, { through: PsychoStudent, onDelete: "CASCADE" });
 Student.hasMany(Grade, { onDelete: "CASCADE" });
 Student.hasMany(Wallet, { onDelete: "CASCADE" });
 Student.hasMany(Post);
 Student.hasMany(Comment);
 Student.hasMany(ParentWaiting);
-Student.hasMany(ForumStudent);
+// Student.hasMany(ForumStudent);
 Student.hasMany(Notifications)
 
 //  Teacher
@@ -151,7 +151,7 @@ Forum.belongsToMany(Student, { through: "Student_Forum", onDelete: "CASCADE" });
 Forum.belongsTo(Teacher);
 Forum.hasMany(Post, { onDelete: "CASCADE" });
 Forum.hasOne(Subject);
-Forum.hasMany(ForumStudent);
+// Forum.hasMany(ForumStudent);
 // Post
 Post.belongsTo(Forum);
 Post.hasMany(Comment, { onDelete: "CASCADE" });
@@ -189,8 +189,8 @@ Grade.belongsTo(Student);
 Wallet.belongsTo(Student);
 
 //ForumStudent
-ForumStudent.belongsTo(Forum);
-ForumStudent.belongsTo(Student);
+// ForumStudent.belongsTo(Forum);
+// ForumStudent.belongsTo(Student);
 
 // Notifications
 Notifications.belongsTo(Student)

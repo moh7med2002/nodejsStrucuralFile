@@ -16,4 +16,5 @@ router.get('/comments/:postId',commentController.getAllComment);
 router.delete("/:forumId", adminAuth, forumController.deleteForum);
 router.get("/:forumId", forumController.getForum);
 
+
 module.exports = router;
