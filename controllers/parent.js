@@ -150,7 +150,7 @@ module.exports.getNotification = async (req,res,next) => {
     const parentId = req.parentId;
     try{
         const notifications = await Notification.findAll({where:{ParentId:parentId}});
-        res.status(200).json({notifications});
+        res.status(200).json({notifications : notifications.reverse()});
     }
     catch(err){
         if(! err.statusCode){
