@@ -83,6 +83,7 @@ Student.belongsToMany(Psycho, { through: PsychoStudent, onDelete: "CASCADE" });
 Student.hasMany(Grade, { onDelete: "CASCADE" });
 Student.hasMany(Wallet, { onDelete: "CASCADE" });
 Student.hasMany(Post);
+Student.hasMany(Comment);
 Student.hasMany(ParentWaiting);
 Student.hasMany(ForumStudent);
 Student.hasMany(Notifications)
@@ -93,6 +94,7 @@ Teacher.hasMany(Group, { onDelete: "SET NULL" });
 Teacher.hasMany(Forum, { onDelete: "SET NULL" });
 Teacher.hasMany(Psycho, { onDelete: "SET NULL" });
 Teacher.hasMany(Post);
+Teacher.hasMany(Comment);
 Teacher.hasMany(Notifications)
 
 // Course
@@ -158,6 +160,8 @@ Post.belongsTo(Student);
 
 // Comment
 Comment.belongsTo(Post);
+Comment.belongsTo(Teacher);
+Comment.belongsTo(Student);
 
 // Level
 Level.hasMany(Class);
