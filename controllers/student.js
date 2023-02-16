@@ -43,7 +43,7 @@ module.exports.registerStudent = async (req, res, next) => {
 exports.loginStudent = async (req, res, next) => {
   const { email, password: pass } = req.body;
   try {
-    const currentStudent = await Student.findOne({ where: { email: email } });
+    const currentStudent = await Student.findOne({ where: { email: email }});
     if (!currentStudent) {
       const error = new Error("الايميل غير موجود");
       error.statusCode = 422;

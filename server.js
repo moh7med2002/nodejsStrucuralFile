@@ -85,7 +85,6 @@ Student.hasMany(Wallet, { onDelete: "CASCADE" });
 Student.hasMany(Post);
 Student.hasMany(Comment);
 Student.hasMany(ParentWaiting);
-// Student.hasMany(ForumStudent);
 Student.hasMany(Notifications)
 
 //  Teacher
@@ -147,11 +146,10 @@ Question.hasMany(Answer, { onDelete: "CASCADE" });
 Answer.belongsTo(Question);
 
 // Forum
-Forum.belongsToMany(Student, { through: "Student_Forum", onDelete: "CASCADE" });
+Forum.belongsToMany(Student, { through: ForumStudent , onDelete: "CASCADE" });
 Forum.belongsTo(Teacher);
 Forum.hasMany(Post, { onDelete: "CASCADE" });
-Forum.hasOne(Subject);
-// Forum.hasMany(ForumStudent);
+Forum.belongsTo(Subject)
 // Post
 Post.belongsTo(Forum);
 Post.hasMany(Comment, { onDelete: "CASCADE" });
@@ -176,7 +174,7 @@ Class.hasMany(Section);
 Subject.belongsTo(Class);
 Subject.belongsTo(Level);
 Subject.belongsTo(Section);
-Subject.belongsTo(Forum);
+Subject.hasMany(Forum);
 
 //  Section
 Section.belongsTo(Class);
@@ -188,9 +186,9 @@ Grade.belongsTo(Student);
 // Wallet
 Wallet.belongsTo(Student);
 
-//ForumStudent
-// ForumStudent.belongsTo(Forum);
-// ForumStudent.belongsTo(Student);
+ForumStudent
+ForumStudent.belongsTo(Forum);
+ForumStudent.belongsTo(Student);
 
 // Notifications
 Notifications.belongsTo(Student)
@@ -259,11 +257,11 @@ const port = process.env.PORT || 9000;
 console.log(port);
 const seqalize = require("./util/database");
 seqalize
-  .sync({ alter: true })
+  .sync({ force: true })
   .then((result) => {
     console.log("conntect");
     app.listen(port);
   })
   .catch((err) => {
     console.log(err);
-  });
+  });  
