@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const forumController = require("../controllers/Forum");
 const adminControllers = require('../controllers/admin')
+const studentControllers = require('../controllers/student')
 const commentController = require("../controllers/comment");
 const postController = require("../controllers/post");
 
@@ -11,6 +12,8 @@ const teacherAuth = require("../middelware/TeacherAuth");
 
 router.post("/create", adminAuth, forumController.createForum);
 router.get('/all'  , adminControllers.getAllForums);
+router.get('/student/allowed'  , studentAuth  , studentControllers.getAllowedForums);
+router.get('/student/registred'  , studentAuth  , forumController.getStudentRegisterForums);
 router.get('/posts/:forumId', postController.getAllPost);
 router.get('/comments/:postId',commentController.getAllComment);
 router.delete("/:forumId", adminAuth, forumController.deleteForum);

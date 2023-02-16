@@ -212,6 +212,34 @@ const clearImage = (filePath) => {
   });
 };
 
+
+module.exports.getAllowedForums = async (req,res,next) => {
+  const studentId = req.studentId;
+  try{
+    const currentStudent = await Student.findOne({ where: { id: studentId } });
+    if (!currentStudent) {
+      const error = new Error("يرجى تسجيل الدخول");
+      error.statusCode = 422;
+      throw error;
+    }
+    const forums = await Forum.findAll({
+      where: {
+        LevelId: currentStudent.LevelId,
+        ClassId: currentStudent.ClassId,
+        SectionId: currentStudent.SectionId,
+      },
+      include: { all: true },
+    });
+    res.status(200).json({forums});
+  }
+  catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+}
+
 module.exports.joinForum = async (req, res, next) => {
   const studentId = req.studentId;
   const { forumId } = req.params;

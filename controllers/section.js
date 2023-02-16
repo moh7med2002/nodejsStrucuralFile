@@ -16,7 +16,7 @@ module.exports.createSection = async (req,res,next)=>{
         next(err);
     }
 }
-
+ 
 module.exports.getSections = async(req,res,next)=>{
     try{
         const sections = await Section.findAll();
