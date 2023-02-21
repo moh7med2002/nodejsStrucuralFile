@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Subject = require('../models/Subject');
-const adminAuth = require('../middelware/AdminAuth');
+const privateSchoolAuth = require('../middelware/PrivateSchoolAuth');
 
 
-router.post('/create', adminAuth , async(req,res,next)=>{
+router.post('/create', privateSchoolAuth , async(req,res,next)=>{
     try{
         const {title,ClassId,LevelId, SectionId} = req.body
         const subject = new Subject({title,ClassId,LevelId, SectionId:SectionId||null});

@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const Student = require('../models/Student');
 
-exports.createCourseByAdmin = async(req,res,next)=>
+exports.createCourseByPrivateSchool = async(req,res,next)=>
 {
     try{
         const {title,price,TeacherId,SubjectId, goals} = req.body;
@@ -104,7 +104,7 @@ exports.getSingleCourse =async(req,res,next)=>
     }
 }
 
-exports.deleteCourseByAdmin =async(req,res,next)=>
+exports.deleteCourseByPrivateSchool =async(req,res,next)=>
 {
     const {courseId} = req.params;
     try{
@@ -123,7 +123,7 @@ exports.deleteCourseByAdmin =async(req,res,next)=>
     }
 }
 
-exports.updateCourseByAdmin = async(req,res,next)=>
+exports.updateCourseByPrivateSchool = async(req,res,next)=>
 {
     const {courseId} = req.params;
     const {title, price, TeacherId , goals} =  req.body;

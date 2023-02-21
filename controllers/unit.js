@@ -1,7 +1,7 @@
 const Unit = require('../models/Unit');
 
 
-exports.createUnitByAdmin = async(req,res,next)=>
+exports.createUnitByPrivateSchool = async(req,res,next)=>
 {
     try{
         const {title,CourseId} = req.body
@@ -85,7 +85,7 @@ module.exports.getUnitExams = async (req,res,next) => {
     }
 }
 
-module.exports.updateUnitByAdmin = async (req,res , next)=>{
+module.exports.updateUnitByPrivateSchool = async (req,res , next)=>{
     const {unitId} = req.params;
     const {title} = req.body;
     try{
@@ -133,7 +133,7 @@ module.exports.updateUnitByTeacher = async (req,res , next)=>{
 }
 
 
-module.exports.deleteUnitByAdmin = async (req,res,next)=>{
+module.exports.deleteUnitByPrivateSchool = async (req,res,next)=>{
     const {unitId} = req.params;
     try{
         const unit = await Unit.findOne({where:{id:unitId}});

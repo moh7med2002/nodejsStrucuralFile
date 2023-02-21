@@ -34,6 +34,7 @@ app.use((req, res, next) => {
 
 const Student = require("./models/Student");
 const Admin = require("./models/Admin");
+const PrivateSchool = require("./models/PrivateSchool");
 const Parent = require("./models/Parent");
 const Course = require("./models/Course");
 const Unit = require("./models/Unit");
@@ -57,21 +58,32 @@ const Psycho = require("./models/Psycho");
 const PsychoStudent = require("./models/PsychoStudent");
 const ParentWaiting = require("./models/ParentWaiting");
 const ForumStudent = require("./models/ForumStudent");
-const Notifications = require('./models/Notifications')
+const Notifications = require("./models/Notifications");
 
 // Admin
-Admin.hasMany(Notifications)
+Admin.hasMany(Notifications);
+
+// PrivateSchool
+PrivateSchool.hasMany(Student, { onDelete: "SET NULL" });
+PrivateSchool.hasMany(Teacher, { onDelete: "SET NULL" });
+PrivateSchool.hasMany(Subject, { onDelete: "SET NULL" });
+PrivateSchool.hasMany(Level, { onDelete: "SET NULL" });
+PrivateSchool.hasMany(Group, { onDelete: "SET NULL" });
+PrivateSchool.hasMany(Course, { onDelete: "SET NULL" });
+PrivateSchool.hasMany(Psycho, { onDelete: "SET NULL" });
+PrivateSchool.hasMany(Forum, { onDelete: "SET NULL" });
 
 //  parent
 Parent.hasMany(Student, { onDelete: "SET NULL" });
 Parent.hasMany(ParentWaiting);
-Parent.hasMany(Notifications)
+Parent.hasMany(Notifications);
 
 // ParentWaiting
 ParentWaiting.belongsTo(Student);
 ParentWaiting.belongsTo(Parent);
 
 // Student
+Student.belongsTo(PrivateSchool);
 Student.belongsTo(Parent);
 Student.belongsTo(Level);
 Student.belongsTo(Class);
@@ -85,7 +97,7 @@ Student.hasMany(Wallet, { onDelete: "CASCADE" });
 Student.hasMany(Post);
 Student.hasMany(Comment);
 Student.hasMany(ParentWaiting);
-Student.hasMany(Notifications)
+Student.hasMany(Notifications);
 
 //  Teacher
 Teacher.hasMany(Course);
@@ -94,7 +106,7 @@ Teacher.hasMany(Forum, { onDelete: "SET NULL" });
 Teacher.hasMany(Psycho, { onDelete: "SET NULL" });
 Teacher.hasMany(Post);
 Teacher.hasMany(Comment);
-Teacher.hasMany(Notifications)
+Teacher.hasMany(Notifications);
 
 // Course
 Course.belongsTo(Teacher);
@@ -146,10 +158,10 @@ Question.hasMany(Answer, { onDelete: "CASCADE" });
 Answer.belongsTo(Question);
 
 // Forum
-Forum.belongsToMany(Student, { through: ForumStudent , onDelete: "CASCADE" });
+Forum.belongsToMany(Student, { through: ForumStudent, onDelete: "CASCADE" });
 Forum.belongsTo(Teacher);
 Forum.hasMany(Post, { onDelete: "CASCADE" });
-Forum.belongsTo(Subject)
+Forum.belongsTo(Subject);
 Forum.belongsTo(Level);
 Forum.belongsTo(Class);
 Forum.belongsTo(Section);
@@ -189,15 +201,15 @@ Grade.belongsTo(Student);
 // Wallet
 Wallet.belongsTo(Student);
 
-ForumStudent
+ForumStudent;
 ForumStudent.belongsTo(Forum);
 ForumStudent.belongsTo(Student);
 
 // Notifications
-Notifications.belongsTo(Student)
-Notifications.belongsTo(Parent)
-Notifications.belongsTo(Teacher)
-Notifications.belongsTo(Admin)
+Notifications.belongsTo(Student);
+Notifications.belongsTo(Parent);
+Notifications.belongsTo(Teacher);
+Notifications.belongsTo(Admin);
 
 // refer routes
 const studentRouter = require("./routers/student");
@@ -248,6 +260,9 @@ app.use("/api/psycho", psychoRouter);
 const parentRouter = require("./routers/parent");
 app.use("/api/parent", parentRouter);
 
+const privateSchoolRouter = require("./routers/privateSchool");
+app.use("/api/privateSchool", privateSchoolRouter);
+
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
@@ -260,11 +275,12 @@ const port = process.env.PORT || 9000;
 console.log(port);
 const seqalize = require("./util/database");
 seqalize
-  .sync({})
+  // .sync({})
+  .sync({ force: true })
   .then((result) => {
-    console.log("conntect");
+    console.log("database connected");
     app.listen(port);
   })
   .catch((err) => {
     console.log(err);
-  });  
+  });

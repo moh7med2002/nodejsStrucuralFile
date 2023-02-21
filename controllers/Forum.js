@@ -8,7 +8,7 @@ exports.createForum = async (req, res, next) => {
     const imageName = req.file.filename;
     const { title, TeacherId, SubjectId } = req.body;
     console.log(req.body);
-    if (req.adminId) {
+    if (req.privateSchoolId) {
       const subject = await Subject.findOne({where:{id:SubjectId}});
         if(!subject)
         {

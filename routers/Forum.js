@@ -1,22 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const forumController = require("../controllers/Forum");
-const adminControllers = require('../controllers/admin')
+const privateSchoolControllers = require('../controllers/privateSchool')
 const studentControllers = require('../controllers/student')
 const commentController = require("../controllers/comment");
 const postController = require("../controllers/post");
 
-const adminAuth = require("../middelware/AdminAuth");
+const privateSchoolAuth = require("../middelware/PrivateSchoolAuth");
 const studentAuth = require("../middelware/StudentAuth");
 const teacherAuth = require("../middelware/TeacherAuth");
 
-router.post("/create", adminAuth, forumController.createForum);
-router.get('/all'  , adminControllers.getAllForums);
+router.post("/create", privateSchoolAuth, forumController.createForum);
+router.get('/all'  , privateSchoolControllers.getAllForums);
 router.get('/student/allowed'  , studentAuth  , studentControllers.getAllowedForums);
 router.get('/student/registred'  , studentAuth  , forumController.getStudentRegisterForums);
 router.get('/posts/:forumId', postController.getAllPost);
 router.get('/comments/:postId',commentController.getAllComment);
-router.delete("/:forumId", adminAuth, forumController.deleteForum);
+router.delete("/:forumId", privateSchoolAuth, forumController.deleteForum);
 router.get("/:forumId", forumController.getForum);
 
 

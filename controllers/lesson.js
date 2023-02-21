@@ -7,7 +7,7 @@ exports.createLesson = async(req,res,next)=>
         if(req.teacherId){
             status = 0;
         }
-        else if (req.adminId){
+        else if (req.privateSchoolId){
             status = 1;
         }
         const lesson = new Lesson({...req.body , status:status})
@@ -68,7 +68,7 @@ module.exports.deleteLesson = async (req,res,next)=>{
 }
 
 
-module.exports.acceptLessonByAdmin = async(req,res,next) => {
+module.exports.acceptLessonByPrivateSchool = async(req,res,next) => {
     const {lessonId} = req.params;
     try{
         const lesson = await Lesson.findOne({where:{id:lessonId}});
