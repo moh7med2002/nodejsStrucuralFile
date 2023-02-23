@@ -5,7 +5,6 @@ const privateSchoolControllers = require("../controllers/privateSchool");
 
 const privateSchoolAuth = require("../middelware/PrivateSchoolAuth");
 
-router.post("/register", privateSchoolControllers.registerPrivateSchool);
 router.post("/login", privateSchoolControllers.loginPrivateSchool);
 
 router.get("/students/all", privateSchoolAuth, privateSchoolControllers.getAllStudents);

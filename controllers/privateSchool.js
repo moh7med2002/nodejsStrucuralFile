@@ -5,31 +5,6 @@ const Student = require("../models/Student");
 const Forum = require("../models/Forum");
 const ParentWaiting = require("../models/ParentWaiting");
 
-module.exports.registerPrivateSchool = async (req, res, next) => {
-  try {
-    const { email, name, password } = req.body;
-    const privateSchool = await PrivateSchool.findOne({ where: { email } });
-    if (privateSchool) {
-      const error = new Error("الايميل مستخدم");
-      error.statusCode = 403;
-      throw error;
-    }
-    const hashPass = await bcrypt.hash(password, 12);
-    const newPrivateSchool = await PrivateSchool.create({
-      email,
-      password: hashPass,
-      name,
-    });
-    await newPrivateSchool.save();
-    res.status(200).json({ message: "تم انشاء حساب المدرسة الخاصة" });
-  } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
-  }
-};
-
 exports.loginPrivateSchool = async (req, res, next) => {
   const { email, password: pass } = req.body;
   try {
