@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const Forum = require("../models/Forum");
 const ParentWaiting = require("../models/ParentWaiting");
 const Notification = require("../models/Notifications");
+const PrivateSchool = require("../models/PrivateSchool");
 
 module.exports.registerAdmin = async (req, res, next) => {
   try {

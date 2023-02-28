@@ -1,25 +1,33 @@
-const jwt=require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-module.exports=(req,res,next)=>{
-    const authHeader=req.get('Authorization');
-    if(!authHeader){
-        const error=new Error('No Auth');
-        error.statusCode=403;
-        throw error;
+module.exports = (req, res, next) => {
+  try {
+    const authHeader = req.get("Authorization");
+    if (!authHeader) {
+      const error = new Error("No Auth");
+      error.statusCode = 403;
+      throw error;
     }
-    const token =authHeader;
+    const token = authHeader;
     let decodedToken;
-    try{
-        decodedToken=jwt.verify(token,'token');
+    try {
+      decodedToken = jwt.verify(token, "token");
+    } catch (err) {
+      throw err;
     }
-    catch(err){
-        throw err;
+    if (!decodedToken) {
+      const error = new Error("No Auth");
+      error.statusCode = 403;
+      throw error;
     }
-    if(!decodedToken){
-        const error=new Error('No Auth');
-        error.statusCode=403;
-        throw error;
+    if (!decodedToken.parentId) {
+      const error = new Error("Wrong Auth");
+      error.statusCode = 403;
+      throw error;
     }
-    req.parentId=decodedToken.parentId;
+    req.parentId = decodedToken.parentId;
     return next();
-}
+  } catch (error) {
+    next(error);
+  }
+};

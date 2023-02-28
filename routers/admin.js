@@ -8,6 +8,8 @@ const adminAuth = require('../middelware/AdminAuth');
 router.post('/register' , adminControllers.registerAdmin);
 router.post('/login' , adminControllers.loginAdmin);
 
+router.post('/registerPrivateSchool' , adminControllers.registerPrivateSchool);
+
 router.get('/students/all' , adminAuth , adminControllers.getAllStudents);
 router.get('/forums/all' , adminAuth , adminControllers.getAllForums);
 
