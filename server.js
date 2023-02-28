@@ -59,9 +59,16 @@ const PsychoStudent = require("./models/PsychoStudent");
 const ParentWaiting = require("./models/ParentWaiting");
 const ForumStudent = require("./models/ForumStudent");
 const Notifications = require("./models/Notifications");
+const Membership = require("./models/Membership");
+const StudentMembership = require("./models/StudentMembership");
 
 // Admin
 Admin.hasMany(Notifications);
+
+//StudentMembership
+StudentMembership.belongsTo(Membership)
+StudentMembership.belongsTo(Student)
+
 
 // PrivateSchool
 PrivateSchool.hasMany(Student, { onDelete: "SET NULL" });
@@ -263,6 +270,9 @@ app.use("/api/parent", parentRouter);
 const privateSchoolRouter = require("./routers/privateSchool");
 app.use("/api/privateSchool", privateSchoolRouter);
 
+const membershipRouter = require("./routers/membership");
+app.use("/api/membership", membershipRouter);
+
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
@@ -275,8 +285,8 @@ const port = process.env.PORT || 9000;
 console.log(port);
 const seqalize = require("./util/database");
 seqalize
-  .sync({})
-  // .sync({ force: true })
+  // .sync({})
+  .sync({ force: true })
   .then((result) => {
     console.log("database connected");
     app.listen(port);
